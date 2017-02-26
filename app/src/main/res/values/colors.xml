@@ -7,4 +7,6 @@
     <color name="c1">#dacb54</color>
     <color name="c2">#1083e1</color>
     <color name="c3">#a367b9</color>
+    <color name="MainBackground">#FF009688</color>
+    <color name="TaskBarColor">#a8000000</color>
 </resources>

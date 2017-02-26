@@ -1,5 +1,6 @@
 package com.example.destan.kezintagame;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -39,14 +40,15 @@ public class MainActivity extends Activity {
     ArrayList wordCollection;//It stores the all of words
     List<String> wordListView;//It stores the all of the word that come from user
 
+    TextView twQ;
+    TextView inputText;
     MediaPlayer music;
     long duration;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
 
-
-        textGuess = (TextView) findViewById(R.id.textView);
+        //textGuess = (TextView) findViewById(R.id.textView);
         //gridKeyboard = (GridView) findViewById(R.id.gridView);
         listViewInputs = (ListView) findViewById(R.id.listView1);
 
@@ -71,14 +73,17 @@ public class MainActivity extends Activity {
         }while(word.contains(" "));
 
         wordListView.add(word);
+
     }
 
     //Check the word if it exist and it's not repeated
     public boolean checkWord(String word){
+
         if(wordCollection.contains(word) && !wordListView.contains(word))
             return true;
         else
             return false;
+
     }
 
 
@@ -93,6 +98,7 @@ public class MainActivity extends Activity {
 
     //Read the .txt file line by line and store in wordCollection which type is ArrayList
     public void readFromRaw(){
+
         try   {
             InputStream fis = this.getResources().openRawResource(R.raw.turkish_db);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
@@ -107,8 +113,8 @@ public class MainActivity extends Activity {
         catch (Exception ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
 
+    }
 
 
     @Override
@@ -127,10 +133,33 @@ public class MainActivity extends Activity {
 
 
         setContentView(R.layout.activity_main);
+
+        twQ = (TextView)findViewById(R.id.textView1);
+        inputText = (TextView)findViewById(R.id.textInput);
+
+        //this.init();
+
+        inputText.setText("");
+
+        //This listener is used to delete last character.
+        inputText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
+        twQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputText.setText(inputText.getText().toString() + "Q");
+                twQ.animate().x(twQ.getX()+10).y(twQ.getY()+10).setDuration(500).start();
+
+            }
+        });
 /*
-        this.init();
-
-
 
         ArrayAdapter<String> adapterGrid = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, letters);
         final ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this,R.layout.my_text,R.id.textItem,wordListView);
