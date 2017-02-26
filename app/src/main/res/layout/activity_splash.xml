@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="100dp"
+    tools:context="com.example.destan.kezintagame.SplashScreen">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:src="@drawable/k"
+        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="50dp"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:src="@drawable/e"
+        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:src="@drawable/z"
+        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:src="@drawable/i"
+        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:src="@drawable/n"
+        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:src="@drawable/t"
+        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:src="@drawable/a"
+        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_marginLeft="10dp" />
+
+</LinearLayout>
