@@ -60,6 +60,11 @@ public class MainActivity extends Activity {
         textGuess.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
     }
 
+    //A test method declaring
+    public void testMethod(){
+        //..
+    }
+
     //Generate first word for start
     public void generateWord(){
 
