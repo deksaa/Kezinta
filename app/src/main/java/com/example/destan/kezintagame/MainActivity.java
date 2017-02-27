@@ -14,6 +14,9 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.zagum.switchicon.SwitchIconView;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -44,6 +47,9 @@ public class MainActivity extends Activity {
     TextView inputText;
     MediaPlayer music;
     long duration;
+
+    private SwitchIconView switchIcon1;
+    private View button1;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
@@ -136,7 +142,15 @@ public class MainActivity extends Activity {
 
         twQ = (TextView)findViewById(R.id.textView1);
         inputText = (TextView)findViewById(R.id.textInput);
+        switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
+        button1 = findViewById(R.id.button1);
 
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchIcon1.switchState();
+            }
+        });
         //this.init();
 
         inputText.setText("");
