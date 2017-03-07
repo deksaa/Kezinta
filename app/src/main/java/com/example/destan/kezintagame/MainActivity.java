@@ -1,21 +1,22 @@
 package com.example.destan.kezintagame;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.zagum.switchicon.SwitchIconView;
+import com.tomer.fadingtextview.FadingTextView;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -24,39 +25,159 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.datatype.Duration;
+
+import static android.R.attr.key;
+
 
 public class MainActivity extends Activity {
 
     String guess = "";
     String word = "";
     String lastCharOfWord ="k";
-    String[] letters = {"A", "B", "C", "Ç" ,"D", "E", "F", "G",
-                        "Ğ", "H", "I", "İ" ,"J", "K", "L", "M",
-                        "N", "O", "Ö", "P" ,"R", "S", "Ş", "T",
-                        "U", "Ü", "V", "Y" ,"Z", "←", "↪"
-                        };
 
-    TextView textGuess;
-    GridView gridKeyboard;
-    ListView listViewInputs;
+    //Keyboard keys are declareting.
+    TextView keyboardKeyQ;
+    TextView keyboardKeyW;
+    TextView keyboardKeyE;
+    TextView keyboardKeyR;
+    TextView keyboardKeyT;
+    TextView keyboardKeyY;
+    TextView keyboardKeyU;
+    TextView keyboardKeyI;
+    TextView keyboardKeyO;
+    TextView keyboardKeyP;
+    TextView keyboardKeyĞ;
+    TextView keyboardKeyÜ;
+    TextView keyboardKeyA;
+    TextView keyboardKeyS;
+    TextView keyboardKeyD;
+    TextView keyboardKeyF;
+    TextView keyboardKeyG;
+    TextView keyboardKeyH;
+    TextView keyboardKeyJ;
+    TextView keyboardKeyK;
+    TextView keyboardKeyL;
+    TextView keyboardKeyŞ;
+    TextView keyboardKeyİ;
+    TextView keyboardKeyZ;
+    TextView keyboardKeyX;
+    TextView keyboardKeyC;
+    TextView keyboardKeyV;
+    TextView keyboardKeyB;
+    TextView keyboardKeyN;
+    TextView keyboardKeyM;
+    TextView keyboardKeyÖ;
+    TextView keyboardKeyÇ;
+
+    List<TextView> keyboardTextViews;
 
     ArrayList wordCollection;//It stores the all of words
     List<String> wordListView;//It stores the all of the word that come from user
 
-    TextView twQ;
-    TextView inputText;
     MediaPlayer music;
-    long duration;
+
+    TextView inputText;
+
+    FadingTextView fTextViewInfos;
+    int duration;
+
+    LinearLayout keyboardView;
 
     private SwitchIconView switchIcon1;
-    private View button1;
+    private SwitchIconView switchIcon2;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
 
         //textGuess = (TextView) findViewById(R.id.textView);
         //gridKeyboard = (GridView) findViewById(R.id.gridView);
-        listViewInputs = (ListView) findViewById(R.id.listView1);
+        //listViewInputs = (ListView) findViewById(R.id.listView1);
+
+
+
+        keyboardTextViews = new ArrayList<>();
+
+//        for(int i = 0 ; i < keyboardView.getChildCount();i++) {
+//            Log.d("Flag", " " + keyboardView.getChildAt(i).getId());
+//            if (keyboardView.getChildAt(i) instanceof TextView) {
+//                keyboardTextViews.add((TextView) findViewById(keyboardView.getChildAt(i).getId()));
+//
+//            }
+//        }
+
+
+        keyboardTextViews.add((TextView)findViewById(R.id.textView1));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView2));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView3));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView4));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView5));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView6));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView7));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView8));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView9));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView10));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView11));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView12));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView13));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView14));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView15));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView16));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView17));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView18));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView19));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView20));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView21));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView22));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView23));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView24));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView25));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView26));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView27));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView28));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView29));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView30));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView31));
+        keyboardTextViews.add((TextView)findViewById(R.id.textView32));
+//
+//
+//
+//
+//        keyboardKeyQ = (TextView)findViewById(R.id.textView1);
+//        keyboardKeyW = (TextView)findViewById(R.id.textView2);
+//        keyboardKeyE = (TextView)findViewById(R.id.textView3);
+//        keyboardKeyR = (TextView)findViewById(R.id.textView4);
+//        keyboardKeyT = (TextView)findViewById(R.id.textView5);
+//        keyboardKeyY = (TextView)findViewById(R.id.textView6);
+//        keyboardKeyU = (TextView)findViewById(R.id.textView7);
+//        keyboardKeyI = (TextView)findViewById(R.id.textView8);
+//        keyboardKeyO = (TextView)findViewById(R.id.textView9);
+//        keyboardKeyP = (TextView)findViewById(R.id.textView10);
+//        keyboardKeyĞ = (TextView)findViewById(R.id.textView11);
+//        keyboardKeyÜ = (TextView)findViewById(R.id.textView12);
+//        keyboardKeyA = (TextView)findViewById(R.id.textView13);
+//        keyboardKeyS = (TextView)findViewById(R.id.textView14);
+//        keyboardKeyD = (TextView)findViewById(R.id.textView15);
+//        keyboardKeyF = (TextView)findViewById(R.id.textView16);
+//        keyboardKeyG = (TextView)findViewById(R.id.textView17);
+//        keyboardKeyH = (TextView)findViewById(R.id.textView18);
+//        keyboardKeyJ = (TextView)findViewById(R.id.textView19);
+//        keyboardKeyK = (TextView)findViewById(R.id.textView20);
+//        keyboardKeyL = (TextView)findViewById(R.id.textView21);
+//        keyboardKeyŞ = (TextView)findViewById(R.id.textView22);
+//        keyboardKeyİ = (TextView)findViewById(R.id.textView23);
+//        keyboardKeyZ = (TextView)findViewById(R.id.textView24);
+//        keyboardKeyX = (TextView)findViewById(R.id.textView25);
+//        keyboardKeyC = (TextView)findViewById(R.id.textView26);
+//        keyboardKeyV = (TextView)findViewById(R.id.textView27);
+//        keyboardKeyB = (TextView)findViewById(R.id.textView28);
+//        keyboardKeyN = (TextView)findViewById(R.id.textView29);
+//        keyboardKeyM = (TextView)findViewById(R.id.textView30);
+//        keyboardKeyÖ = (TextView)findViewById(R.id.textView31);
+//        keyboardKeyÇ = (TextView)findViewById(R.id.textView32);
+//
+//
+
 
         wordCollection = new ArrayList<>();
         wordListView = new ArrayList<>();
@@ -65,7 +186,6 @@ public class MainActivity extends Activity {
         generateWord();
         findLastChar(wordListView);
 
-        textGuess.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
     }
 
     //Generate first word for start
@@ -122,57 +242,92 @@ public class MainActivity extends Activity {
 
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        /*runOnUiThread(new Runnable(){
+    /*runOnUiThread(new Runnable(){
             @Override
             public void run(){
                 // change UI elements here
             }
         });*/
 
+    public String backSpace(String str){
+        char[] ch = str.toCharArray();
+        str = "";
+        for(int i = 0; i < ch.length - 1 ; i++)
+            str += ch[i];
 
+        return str;
+    }
+
+//    public void keyboardListener(final TextView t){
+//        t.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                inputText.setText(t.getText().toString());
+//            }
+//        });
+//    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        twQ = (TextView)findViewById(R.id.textView1);
         inputText = (TextView)findViewById(R.id.textInput);
         switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
-        button1 = findViewById(R.id.button1);
+        switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
+        fTextViewInfos = (FadingTextView) findViewById(R.id.fadingTextView);
+        keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        this.init();
+
+
+        switchIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchIcon1.switchState();
             }
         });
-        //this.init();
 
-        inputText.setText("");
+        switchIcon2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchIcon2.switchState();
+                if(!switchIcon2.isIconEnabled() && music.isPlaying()){
+                    duration = music.getCurrentPosition();
+                    music.pause();
+                }else{
+                    music.seekTo(duration);
+                    music.start();
+                }
+
+            }
+        });
+
 
         //This listener is used to delete last character.
         inputText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                inputText.setText(backSpace(inputText.getText().toString()));
             }
         });
 
+        //This listener is used to listen keys to write on board.
+        for (final TextView textView : keyboardTextViews){
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("debug",textView.getText().toString());
+                    inputText.setText(inputText.getText().toString() + textView.getText().toString());
+                }
+            });
+        }
 
 
-        twQ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputText.setText(inputText.getText().toString() + "Q");
-                twQ.animate().x(twQ.getX()+10).y(twQ.getY()+10).setDuration(500).start();
 
-            }
-        });
+
 /*
 
         ArrayAdapter<String> adapterGrid = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, letters);
@@ -240,7 +395,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
-        music = MediaPlayer.create(MainActivity.this,R.raw.menu);
+        music = MediaPlayer.create(MainActivity.this,R.raw.gamemod2);
         music.setLooping(true);
         music.start();
     }
@@ -255,7 +410,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume(){
         super.onResume();
-        music.seekTo((int)duration);
+        music.seekTo(duration);
         music.start();
     }
 }

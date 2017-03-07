@@ -97,7 +97,7 @@ public class SplashScreen extends Activity {
         @Override
         public void onAnimationEnd(Animation animation) {
             if(animations[6].equals(animation)) {
-                Intent goToMainActivity = new Intent(SplashScreen.this, MainActivity.class);
+                Intent goToMainActivity = new Intent(SplashScreen.this, MenuActivity.class);
                 SplashScreen.this.finish();
                 startActivity(goToMainActivity);
             }
