@@ -36,6 +36,8 @@ public class MenuActivity extends Activity {
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private MediaPlayer music;
+    private int duration;
+    private boolean musicFlag;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -135,11 +137,28 @@ public class MenuActivity extends Activity {
         delayedHide(100);
     }
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        music = MediaPlayer.create(MenuActivity.this,R.raw.menumusic);
+        music = MediaPlayer.create(MenuActivity.this, R.raw.menumusic);
         music.start();
         music.setLooping(true);
+    }
+
+    protected void onPause(){
+        super.onPause();
+        duration = music.getCurrentPosition();
+        music.pause();
+        musicFlag = true;
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(musicFlag){
+            music.seekTo(duration);
+            music.start();
+        }
+
     }
 
     private void toggle() {

@@ -1,6 +1,7 @@
 package com.example.destan.kezintagame;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class MainActivity extends Activity {
     String guess = "";
     String word = "";
     String lastCharOfWord ="k";
+
+    boolean musicFlag = false;
 
     //Keyboard keys are declareting.
     TextView keyboardKeyQ;
@@ -405,12 +408,21 @@ public class MainActivity extends Activity {
         super.onPause();
         duration = music.getCurrentPosition();
         music.pause();
+        musicFlag = true;
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        music.seekTo(duration);
-        music.start();
+        if(musicFlag) {
+            music.seekTo(duration);
+            music.start();
+        }
+    }
+    @Override
+    public void onBackPressed(){
+        Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
+        MainActivity.this.finish();
+        startActivity(goToMenuActivity);
     }
 }
