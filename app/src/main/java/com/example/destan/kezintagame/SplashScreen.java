@@ -13,49 +13,49 @@ import android.widget.ImageView;
 public class SplashScreen extends Activity {
 
 
-    Runnable runnable;
-    Handler handler = new Handler();
+Runnable runnable;
+Handler handler = new Handler();
 
-    AlphaAnimation alphaAnimation;
-    ImageView myLogo;
+AlphaAnimation alphaAnimation;
+ImageView myLogo;
 
-    boolean isStart;
+boolean isStart;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_splash);
+    setContentView(R.layout.activity_splash);
 
-        myLogo = (ImageView)findViewById(R.id.myLogo);
+    myLogo = (ImageView)findViewById(R.id.myLogo);
 
-        startAnimation(1500,5500);
+    startAnimation(1500,5500);
 
-    }
+}
 
 
-    private void startAnimation(final int animationDuration, final int totalDuration){
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                if(!isStart){
-                    alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-                    alphaAnimation.setDuration(animationDuration);
-                    myLogo.startAnimation(alphaAnimation);
-                    isStart = !isStart;
-                    handler.postDelayed(runnable, totalDuration - animationDuration);
-                }else{
-                    handler.removeCallbacks(runnable);
-                    Intent goToMainActivity = new Intent(SplashScreen.this, MenuActivity.class);
-                    SplashScreen.this.finish();
-                    startActivity(goToMainActivity);
-                    }
+private void startAnimation(final int animationDuration, final int totalDuration){
+    runnable = new Runnable() {
+        @Override
+        public void run() {
+            if(!isStart){
+                alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+                alphaAnimation.setDuration(animationDuration);
+                myLogo.startAnimation(alphaAnimation);
+                isStart = !isStart;
+                handler.postDelayed(runnable, totalDuration - animationDuration);
+            }else{
+                handler.removeCallbacks(runnable);
+                Intent goToMainActivity = new Intent(SplashScreen.this, MenuActivity.class);
+                SplashScreen.this.finish();
+                startActivity(goToMainActivity);
                 }
-            };runnable.run();
-        }
+            }
+        };runnable.run();
+    }
 }
 
 

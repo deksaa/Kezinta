@@ -2,13 +2,16 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,59 +36,23 @@ import static android.R.attr.key;
 
 public class MainActivity extends Activity {
 
-    String guess = "";
-    String word = "";
-    String lastCharOfWord ="k";
-
-    boolean musicFlag = false;
-
-    //Keyboard keys are declareting.
-    TextView keyboardKeyQ;
-    TextView keyboardKeyW;
-    TextView keyboardKeyE;
-    TextView keyboardKeyR;
-    TextView keyboardKeyT;
-    TextView keyboardKeyY;
-    TextView keyboardKeyU;
-    TextView keyboardKeyI;
-    TextView keyboardKeyO;
-    TextView keyboardKeyP;
-    TextView keyboardKeyĞ;
-    TextView keyboardKeyÜ;
-    TextView keyboardKeyA;
-    TextView keyboardKeyS;
-    TextView keyboardKeyD;
-    TextView keyboardKeyF;
-    TextView keyboardKeyG;
-    TextView keyboardKeyH;
-    TextView keyboardKeyJ;
-    TextView keyboardKeyK;
-    TextView keyboardKeyL;
-    TextView keyboardKeyŞ;
-    TextView keyboardKeyİ;
-    TextView keyboardKeyZ;
-    TextView keyboardKeyX;
-    TextView keyboardKeyC;
-    TextView keyboardKeyV;
-    TextView keyboardKeyB;
-    TextView keyboardKeyN;
-    TextView keyboardKeyM;
-    TextView keyboardKeyÖ;
-    TextView keyboardKeyÇ;
-
-    List<TextView> keyboardTextViews;
+    int duration;
+    float screenWidth;
+    boolean musicFlag;
+    float inputTextSize;
 
     ArrayList wordCollection;//It stores the all of words
     List<String> wordListView;//It stores the all of the word that come from user
+    List<TextView> keyboardTextViews;
 
     MediaPlayer music;
 
     TextView inputText;
 
     FadingTextView fTextViewInfos;
-    int duration;
 
     LinearLayout keyboardView;
+    LinearLayout inputView;
 
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
@@ -93,22 +60,18 @@ public class MainActivity extends Activity {
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
 
-        //textGuess = (TextView) findViewById(R.id.textView);
-        //gridKeyboard = (GridView) findViewById(R.id.gridView);
-        //listViewInputs = (ListView) findViewById(R.id.listView1);
+        inputText = (TextView)findViewById(R.id.textInput);
+        inputTextSize = inputText.getTextSize();
 
+        switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
+        switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
 
+        fTextViewInfos = (FadingTextView) findViewById(R.id.fadingTextView);
+
+        keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
+        inputView = (LinearLayout)findViewById(R.id.inputLayout);
 
         keyboardTextViews = new ArrayList<>();
-
-//        for(int i = 0 ; i < keyboardView.getChildCount();i++) {
-//            Log.d("Flag", " " + keyboardView.getChildAt(i).getId());
-//            if (keyboardView.getChildAt(i) instanceof TextView) {
-//                keyboardTextViews.add((TextView) findViewById(keyboardView.getChildAt(i).getId()));
-//
-//            }
-//        }
-
 
         keyboardTextViews.add((TextView)findViewById(R.id.textView1));
         keyboardTextViews.add((TextView)findViewById(R.id.textView2));
@@ -142,67 +105,13 @@ public class MainActivity extends Activity {
         keyboardTextViews.add((TextView)findViewById(R.id.textView30));
         keyboardTextViews.add((TextView)findViewById(R.id.textView31));
         keyboardTextViews.add((TextView)findViewById(R.id.textView32));
-//
-//
-//
-//
-//        keyboardKeyQ = (TextView)findViewById(R.id.textView1);
-//        keyboardKeyW = (TextView)findViewById(R.id.textView2);
-//        keyboardKeyE = (TextView)findViewById(R.id.textView3);
-//        keyboardKeyR = (TextView)findViewById(R.id.textView4);
-//        keyboardKeyT = (TextView)findViewById(R.id.textView5);
-//        keyboardKeyY = (TextView)findViewById(R.id.textView6);
-//        keyboardKeyU = (TextView)findViewById(R.id.textView7);
-//        keyboardKeyI = (TextView)findViewById(R.id.textView8);
-//        keyboardKeyO = (TextView)findViewById(R.id.textView9);
-//        keyboardKeyP = (TextView)findViewById(R.id.textView10);
-//        keyboardKeyĞ = (TextView)findViewById(R.id.textView11);
-//        keyboardKeyÜ = (TextView)findViewById(R.id.textView12);
-//        keyboardKeyA = (TextView)findViewById(R.id.textView13);
-//        keyboardKeyS = (TextView)findViewById(R.id.textView14);
-//        keyboardKeyD = (TextView)findViewById(R.id.textView15);
-//        keyboardKeyF = (TextView)findViewById(R.id.textView16);
-//        keyboardKeyG = (TextView)findViewById(R.id.textView17);
-//        keyboardKeyH = (TextView)findViewById(R.id.textView18);
-//        keyboardKeyJ = (TextView)findViewById(R.id.textView19);
-//        keyboardKeyK = (TextView)findViewById(R.id.textView20);
-//        keyboardKeyL = (TextView)findViewById(R.id.textView21);
-//        keyboardKeyŞ = (TextView)findViewById(R.id.textView22);
-//        keyboardKeyİ = (TextView)findViewById(R.id.textView23);
-//        keyboardKeyZ = (TextView)findViewById(R.id.textView24);
-//        keyboardKeyX = (TextView)findViewById(R.id.textView25);
-//        keyboardKeyC = (TextView)findViewById(R.id.textView26);
-//        keyboardKeyV = (TextView)findViewById(R.id.textView27);
-//        keyboardKeyB = (TextView)findViewById(R.id.textView28);
-//        keyboardKeyN = (TextView)findViewById(R.id.textView29);
-//        keyboardKeyM = (TextView)findViewById(R.id.textView30);
-//        keyboardKeyÖ = (TextView)findViewById(R.id.textView31);
-//        keyboardKeyÇ = (TextView)findViewById(R.id.textView32);
-//
-//
-
 
         wordCollection = new ArrayList<>();
         wordListView = new ArrayList<>();
 
+        musicFlag = false;
+
         readFromRaw();
-        generateWord();
-        findLastChar(wordListView);
-
-    }
-
-    //Generate first word for start
-    public void generateWord(){
-
-        Random rnd = new Random();
-        int size = wordCollection.size();
-
-        do{
-            word = (String) wordCollection.get(rnd.nextInt(size));
-        }while(word.contains(" "));
-
-        wordListView.add(word);
-
     }
 
     //Check the word if it exist and it's not repeated
@@ -215,15 +124,6 @@ public class MainActivity extends Activity {
 
     }
 
-
-    //Find the last char of last word.
-    public String findLastChar(List<String> list){
-
-        String word = list.get(list.size()-1);
-        lastCharOfWord = word.substring(word.length()-1);
-        return lastCharOfWord;
-
-    }
 
     //Read the .txt file line by line and store in wordCollection which type is ArrayList
     public void readFromRaw(){
@@ -245,14 +145,17 @@ public class MainActivity extends Activity {
 
     }
 
-    /*runOnUiThread(new Runnable(){
-            @Override
-            public void run(){
-                // change UI elements here
-            }
-        });*/
+    /*
+    * runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+                    // change UI elements here
+                    tv.setTextSize(currentTextSize - 1);
+                }
+            });
+     */
 
-    public String backSpace(String str){
+    private String backSpace(String str){
         char[] ch = str.toCharArray();
         str = "";
         for(int i = 0; i < ch.length - 1 ; i++)
@@ -261,30 +164,29 @@ public class MainActivity extends Activity {
         return str;
     }
 
-//    public void keyboardListener(final TextView t){
-//        t.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                inputText.setText(t.getText().toString());
-//            }
-//        });
-//    }
+    private void increaseTextSize(TextView tv){
+        float currentTextSize = tv.getTextSize();
+        if(currentTextSize < inputTextSize)
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize + 5.0F);
+    }
+
+    private void decreaseTextSize(TextView tv){
+        float currentTextSize = tv.getTextSize();
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize - 5.0F);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
 
-        inputText = (TextView)findViewById(R.id.textInput);
-        switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
-        switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
-        fTextViewInfos = (FadingTextView) findViewById(R.id.fadingTextView);
-        keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
+        setContentView(R.layout.activity_main);
 
         this.init();
 
+        Toast.makeText(MainActivity.this,"Screen width:" + screenWidth,Toast.LENGTH_SHORT).show();
 
         switchIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,12 +210,13 @@ public class MainActivity extends Activity {
             }
         });
 
-
         //This listener is used to delete last character.
         inputText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputText.setText(backSpace(inputText.getText().toString()));
+                    Log.i("User Action","Delete the last char");
+                    inputText.setText(backSpace(inputText.getText().toString()));
+                    increaseTextSize(inputText);
             }
         });
 
@@ -322,14 +225,12 @@ public class MainActivity extends Activity {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("debug",textView.getText().toString());
+                    Log.d("User action","Appending: " + textView.getText().toString());
                     inputText.setText(inputText.getText().toString() + textView.getText().toString());
+                    decreaseTextSize(inputText);
                 }
             });
         }
-
-
-
 
 /*
 
