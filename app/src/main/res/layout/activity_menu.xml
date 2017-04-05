@@ -6,19 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/MainBackground"
-    tools:context="com.example.destan.kezintagame.Menu2Activity">
+    tools:context="com.example.destan.kezintagame.MenuActivity">
 
     <LinearLayout
         android:id="@+id/LogoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_overlay"
         android:layout_weight="0.2">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/menuLogo"/>
+            android:src="@drawable/menulogo"
+            />
 
     </LinearLayout>
 
@@ -28,27 +28,45 @@
         android:layout_height="match_parent"
         android:layout_below="@id/LogoLayout"
         android:layout_weight="0.2"
-        android:paddingTop="50dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
         >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.33"
+            ></LinearLayout>
+
 
         <ImageView
             android:id="@+id/playButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/playButton"
+            android:layout_width="70dp"
+            android:layout_height="170dp"
+            android:src="@drawable/playbutton"
             android:gravity="center"
-            android:layout_weight="0.2" />
+            android:layout_weight="0.33"
+            tools:ignore="ContentDescription"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.33"
+            ></LinearLayout>
 
     </LinearLayout>
+
+
+
 
     <LinearLayout
         android:id="@+id/icons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_overlay"
         android:layout_weight="0.3"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="10dp">
 
 
         <ImageView
@@ -72,7 +90,7 @@
             android:id="@+id/rankButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/rankButton"
+            android:src="@drawable/rankbutton"
             android:gravity="center"
             android:layout_weight="0.25" />
 
@@ -83,7 +101,7 @@
             android:layout_height="50dp"
             android:src="@drawable/noads"
             android:gravity="center"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"/>
 
     </LinearLayout>
 

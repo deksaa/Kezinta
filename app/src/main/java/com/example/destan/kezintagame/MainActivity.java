@@ -2,37 +2,23 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.zagum.switchicon.SwitchIconView;
 import com.tomer.fadingtextview.FadingTextView;
-
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import javax.xml.datatype.Duration;
-
-import static android.R.attr.key;
-
 
 public class MainActivity extends Activity {
 
@@ -167,12 +153,12 @@ public class MainActivity extends Activity {
     private void increaseTextSize(TextView tv){
         float currentTextSize = tv.getTextSize();
         if(currentTextSize < inputTextSize)
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize + 5.0F);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize + 3.5F);
     }
 
     private void decreaseTextSize(TextView tv){
         float currentTextSize = tv.getTextSize();
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize - 5.0F);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize - 3.5F);
     }
 
     @Override
