@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_menu2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/MainBackground"
+    tools:context="com.example.destan.kezintagame.Menu2Activity">
+
+    <LinearLayout
+        android:id="@+id/LogoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_overlay"
+        android:layout_weight="0.2">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/menuLogo"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/playButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/LogoLayout"
+        android:layout_weight="0.2"
+        android:paddingTop="50dp"
+        >
+
+        <ImageView
+            android:id="@+id/playButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/playButton"
+            android:gravity="center"
+            android:layout_weight="0.2" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/icons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_overlay"
+        android:layout_weight="0.3"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+
+        <ImageView
+            android:id="@+id/shareButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/share"
+            android:gravity="center"
+            android:layout_weight="0.25" />
+
+
+        <ImageView
+            android:id="@+id/settingsButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/setting"
+            android:gravity="center"
+            android:layout_weight="0.25" />
+
+        <ImageView
+            android:id="@+id/rankButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/rankButton"
+            android:gravity="center"
+            android:layout_weight="0.25" />
+
+
+        <ImageView
+            android:id="@+id/noAdsButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/noads"
+            android:gravity="center"
+            android:layout_weight="0.25" />
+
+    </LinearLayout>
+
+</LinearLayout>
