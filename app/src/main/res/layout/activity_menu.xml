@@ -6,17 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/MainBackground"
+    android:weightSum="3"
     tools:context="com.example.destan.kezintagame.MenuActivity">
 
     <LinearLayout
         android:id="@+id/LogoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.2">
+        android:layout_weight="1">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="40dp"
             android:src="@drawable/menulogo"
             />
 
@@ -27,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/LogoLayout"
-        android:layout_weight="0.2"
+        android:layout_weight="1"
         android:paddingTop="10dp"
         android:orientation="horizontal"
         >
@@ -64,7 +66,7 @@
         android:id="@+id/icons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.3"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -75,6 +77,7 @@
             android:layout_height="50dp"
             android:src="@drawable/share"
             android:gravity="center"
+            android:layout_marginTop="60dp"
             android:layout_weight="0.25" />
 
 
@@ -84,6 +87,7 @@
             android:layout_height="50dp"
             android:src="@drawable/setting"
             android:gravity="center"
+            android:layout_marginTop="60dp"
             android:layout_weight="0.25" />
 
         <ImageView
@@ -92,6 +96,7 @@
             android:layout_height="50dp"
             android:src="@drawable/rankbutton"
             android:gravity="center"
+            android:layout_marginTop="60dp"
             android:layout_weight="0.25" />
 
 
@@ -101,6 +106,7 @@
             android:layout_height="50dp"
             android:src="@drawable/noads"
             android:gravity="center"
+            android:layout_marginTop="60dp"
             android:layout_weight="0.25"/>
 
     </LinearLayout>

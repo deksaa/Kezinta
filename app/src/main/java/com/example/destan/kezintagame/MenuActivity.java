@@ -12,7 +12,10 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
@@ -34,13 +37,16 @@ public class MenuActivity extends Activity {
         shareButton = (ImageView) findViewById(R.id.shareButton);
         rankButton = (ImageView) findViewById(R.id.rankButton);
 
-        rotateRight = new RotateAnimation(-10, 10);
-        rotateLeft = new RotateAnimation(10, -10);
+        rotateRight = new RotateAnimation(-2, 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateLeft = new RotateAnimation(2, 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-        rotateRight.setDuration(4000);
-        rotateLeft.setDuration(4000);
+        rotateRight.setDuration(500);
+        rotateLeft.setDuration(500);
 
-        rotateLeft.setRepeatMode(Animation.INFINITE);
+        rotateLeft.setRepeatMode(Animation.REVERSE);
+        rotateRight.setRepeatMode(Animation.REVERSE);
+
+        rotateLeft.setRepeatCount(Animation.INFINITE);
         rotateRight.setRepeatCount(Animation.INFINITE);
 
         playButton.setAnimation(rotateRight);
@@ -49,11 +55,13 @@ public class MenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_menu);
 
         init();
-
-
 
         playButton.setOnTouchListener(new View.OnTouchListener() {
 
@@ -193,7 +201,7 @@ public class MenuActivity extends Activity {
                 return true;
             }
         });
-
+/*
         rotateRight.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -202,6 +210,7 @@ public class MenuActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                rotateLeft.setFillAfter(true);
                 rotateRight.cancel();
                 playButton.setAnimation(rotateLeft);
             }
@@ -220,6 +229,7 @@ public class MenuActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                rotateLeft.setFillAfter(true);
                 rotateLeft.cancel();
                 playButton.setAnimation(rotateRight);
             }
@@ -228,7 +238,7 @@ public class MenuActivity extends Activity {
             public void onAnimationRepeat(Animation animation) {
 
             }
-        });
+        });*/
     }
 
 

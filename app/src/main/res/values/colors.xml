@@ -7,9 +7,11 @@
     <color name="c1">#dacb54</color>
     <color name="c2">#1083e1</color>
     <color name="c3">#a367b9</color>
-    <color name="MainBackground">#f9a825</color>
+    <color name="MainBackground">#ffc400</color>
     <color name="TaskBarColor">#a8000000</color>
     <color name="inputWordColor">#01332E</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>
+
+<!-- #f9a825 -->
