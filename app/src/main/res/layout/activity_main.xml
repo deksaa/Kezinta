@@ -396,6 +396,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:scaleType="fitXY"
+            android:tag="M"
             android:layout_weight="1"/>
 
         <ImageView

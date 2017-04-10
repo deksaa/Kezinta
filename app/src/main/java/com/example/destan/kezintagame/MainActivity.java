@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 
     ArrayList wordCollection;//It stores the all of words
     List<String> wordListView;//It stores the all of the word that come from user
-    List<ImageView> keyboardTextViews;
+    List<ImageView> keyboardImageViews;
 
     MediaPlayer music;
 
@@ -58,40 +58,40 @@ public class MainActivity extends Activity {
         keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
         inputView = (LinearLayout)findViewById(R.id.inputLayout);
 
-        keyboardTextViews = new ArrayList<>();
+        keyboardImageViews = new ArrayList<>();
 
-        keyboardTextViews.add((ImageView)findViewById(R.id.q));
-        keyboardTextViews.add((ImageView)findViewById(R.id.w));
-        keyboardTextViews.add((ImageView)findViewById(R.id.e));
-        keyboardTextViews.add((ImageView)findViewById(R.id.r));
-        keyboardTextViews.add((ImageView)findViewById(R.id.t));
-        keyboardTextViews.add((ImageView)findViewById(R.id.y));
-        keyboardTextViews.add((ImageView)findViewById(R.id.u));
-        keyboardTextViews.add((ImageView)findViewById(R.id.ii));
-        keyboardTextViews.add((ImageView)findViewById(R.id.o));
-        keyboardTextViews.add((ImageView)findViewById(R.id.p));
-        keyboardTextViews.add((ImageView)findViewById(R.id.gi));
-        keyboardTextViews.add((ImageView)findViewById(R.id.ui));
-        keyboardTextViews.add((ImageView)findViewById(R.id.a));
-        keyboardTextViews.add((ImageView)findViewById(R.id.s));
-        keyboardTextViews.add((ImageView)findViewById(R.id.d));
-        keyboardTextViews.add((ImageView)findViewById(R.id.f));
-        keyboardTextViews.add((ImageView)findViewById(R.id.g));
-        keyboardTextViews.add((ImageView)findViewById(R.id.h));
-        keyboardTextViews.add((ImageView)findViewById(R.id.j));
-        keyboardTextViews.add((ImageView)findViewById(R.id.k));
-        keyboardTextViews.add((ImageView)findViewById(R.id.l));
-        keyboardTextViews.add((ImageView)findViewById(R.id.si));
-        keyboardTextViews.add((ImageView)findViewById(R.id.i));
-        keyboardTextViews.add((ImageView)findViewById(R.id.z));
-        keyboardTextViews.add((ImageView)findViewById(R.id.x));
-        keyboardTextViews.add((ImageView)findViewById(R.id.c));
-        keyboardTextViews.add((ImageView)findViewById(R.id.v));
-        keyboardTextViews.add((ImageView)findViewById(R.id.b));
-        keyboardTextViews.add((ImageView)findViewById(R.id.n));
-        keyboardTextViews.add((ImageView)findViewById(R.id.m));
-        keyboardTextViews.add((ImageView)findViewById(R.id.oi));
-        keyboardTextViews.add((ImageView)findViewById(R.id.ci));
+        keyboardImageViews.add((ImageView)findViewById(R.id.q));
+        keyboardImageViews.add((ImageView)findViewById(R.id.w));
+        keyboardImageViews.add((ImageView)findViewById(R.id.e));
+        keyboardImageViews.add((ImageView)findViewById(R.id.r));
+        keyboardImageViews.add((ImageView)findViewById(R.id.t));
+        keyboardImageViews.add((ImageView)findViewById(R.id.y));
+        keyboardImageViews.add((ImageView)findViewById(R.id.u));
+        keyboardImageViews.add((ImageView)findViewById(R.id.ii));
+        keyboardImageViews.add((ImageView)findViewById(R.id.o));
+        keyboardImageViews.add((ImageView)findViewById(R.id.p));
+        keyboardImageViews.add((ImageView)findViewById(R.id.gi));
+        keyboardImageViews.add((ImageView)findViewById(R.id.ui));
+        keyboardImageViews.add((ImageView)findViewById(R.id.a));
+        keyboardImageViews.add((ImageView)findViewById(R.id.s));
+        keyboardImageViews.add((ImageView)findViewById(R.id.d));
+        keyboardImageViews.add((ImageView)findViewById(R.id.f));
+        keyboardImageViews.add((ImageView)findViewById(R.id.g));
+        keyboardImageViews.add((ImageView)findViewById(R.id.h));
+        keyboardImageViews.add((ImageView)findViewById(R.id.j));
+        keyboardImageViews.add((ImageView)findViewById(R.id.k));
+        keyboardImageViews.add((ImageView)findViewById(R.id.l));
+        keyboardImageViews.add((ImageView)findViewById(R.id.si));
+        keyboardImageViews.add((ImageView)findViewById(R.id.i));
+        keyboardImageViews.add((ImageView)findViewById(R.id.z));
+        keyboardImageViews.add((ImageView)findViewById(R.id.x));
+        keyboardImageViews.add((ImageView)findViewById(R.id.c));
+        keyboardImageViews.add((ImageView)findViewById(R.id.v));
+        keyboardImageViews.add((ImageView)findViewById(R.id.b));
+        keyboardImageViews.add((ImageView)findViewById(R.id.n));
+        keyboardImageViews.add((ImageView)findViewById(R.id.m));
+        keyboardImageViews.add((ImageView)findViewById(R.id.oi));
+        keyboardImageViews.add((ImageView)findViewById(R.id.ci));
 
         wordCollection = new ArrayList<>();
         wordListView = new ArrayList<>();
@@ -208,15 +208,15 @@ public class MainActivity extends Activity {
         });
 
         //This listener is used to listen keys to write on board.
-        for (final ImageView Image : keyboardTextViews){
-            /*textView.setOnClickListener(new View.OnClickListener() {
+        for (final ImageView Image : keyboardImageViews){
+            Image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("User action","Appending: " + textView.getText().toString());
-                    inputText.setText(inputText.getText().toString() + textView.getText().toString());
-                    decreaseTextSize(inputText);
+                    Log.d("User action","Appending: " + Image.getResources().getResourceEntryName(v.getId()));
+                    //inputText.setText(inputText.getText().toString() + Image.getText().toString());
+                    //decreaseTextSize(inputText);
                 }
-            });*/
+            });
         }
 
 /*
