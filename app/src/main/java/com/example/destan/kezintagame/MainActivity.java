@@ -2,10 +2,12 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,6 +33,7 @@ public class MainActivity extends Activity {
     ArrayList wordCollection;//It stores the all of words
     List<String> wordListView;//It stores the all of the word that come from user
     List<ImageView> keyboardImageViews;
+    ArrayList<ImageView> inputImages;
 
     MediaPlayer music;
 
@@ -47,8 +50,8 @@ public class MainActivity extends Activity {
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
 
-        inputText = (TextView)findViewById(R.id.textInput);
-        inputTextSize = inputText.getTextSize();
+        //inputText = (TextView)findViewById(R.id.textInput);
+        //inputTextSize = inputText.getTextSize();
 
         switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
         switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
@@ -59,6 +62,8 @@ public class MainActivity extends Activity {
         inputView = (LinearLayout)findViewById(R.id.inputLayout);
 
         keyboardImageViews = new ArrayList<>();
+
+        inputText = (TextView)findViewById(R.id.inputText);
 
         keyboardImageViews.add((ImageView)findViewById(R.id.q));
         keyboardImageViews.add((ImageView)findViewById(R.id.w));
@@ -95,6 +100,9 @@ public class MainActivity extends Activity {
 
         wordCollection = new ArrayList<>();
         wordListView = new ArrayList<>();
+        inputImages = new ArrayList<>();
+
+        inputTextSize= inputText.getTextSize();
 
         musicFlag = false;
 
@@ -152,7 +160,7 @@ public class MainActivity extends Activity {
     }
 
     private void increaseTextSize(TextView tv){
-        float currentTextSize = tv.getTextSize();
+        float currentTextSize = inputText.getTextSize();
         if(currentTextSize < inputTextSize)
             tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize + 3.5F);
     }
@@ -160,6 +168,35 @@ public class MainActivity extends Activity {
     private void decreaseTextSize(TextView tv){
         float currentTextSize = tv.getTextSize();
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize - 3.5F);
+    }
+
+
+    private String filterForChars(String s){
+
+        if(s.equals("ii"))
+            return "ı".toUpperCase();
+        else if(s.equals("gi"))
+            return "ğ".toUpperCase();
+        else if(s.equals("ui"))
+            return "ü".toUpperCase();
+        else if(s.equals("si"))
+            return "ş".toUpperCase();
+        else if(s.equals("oi"))
+            return "ö".toUpperCase();
+        else if (s.equals("ci"))
+            return "ç".toUpperCase();
+        else if(s.equals("i"))
+            return "İ";
+        else
+            return s.toUpperCase();
+    }
+
+    private void refreshInputText(String s){
+        if(inputText.getText().toString().length() < 15){
+            inputText.setText(inputText.getText().toString() + s);
+            decreaseTextSize(inputText);
+        }
+
     }
 
     @Override
@@ -172,6 +209,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.init();
+
+        inputText.setText("");
 
         Toast.makeText(MainActivity.this,"Screen width:" + screenWidth,Toast.LENGTH_SHORT).show();
 
@@ -207,17 +246,41 @@ public class MainActivity extends Activity {
             }
         });
 
-        //This listener is used to listen keys to write on board.
+
         for (final ImageView Image : keyboardImageViews){
-            Image.setOnClickListener(new View.OnClickListener() {
+            Image.setOnTouchListener(new View.OnTouchListener() {
+
                 @Override
-                public void onClick(View v) {
-                    Log.d("User action","Appending: " + Image.getResources().getResourceEntryName(v.getId()));
-                    //inputText.setText(inputText.getText().toString() + Image.getText().toString());
-                    //decreaseTextSize(inputText);
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            ImageView view = (ImageView) v;
+                            //overlay is black with transparency of 0x77 (119)
+                            view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
+                            view.invalidate();
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL: {
+                            ImageView view = (ImageView) v;
+                            refreshInputText(filterForChars(Image.getResources().getResourceEntryName(v.getId())));
+                            //clear the overlay
+                            view.getDrawable().clearColorFilter();
+                            view.invalidate();
+                            break;
+                        }
+                    }
+
+                    return true;
                 }
             });
         }
+
+
+
+
+    }
+
 
 /*
 
@@ -281,7 +344,7 @@ public class MainActivity extends Activity {
             }
         });
         */
-    }
+
 
     @Override
     protected void onStart(){
@@ -314,3 +377,4 @@ public class MainActivity extends Activity {
         startActivity(goToMenuActivity);
     }
 }
+
