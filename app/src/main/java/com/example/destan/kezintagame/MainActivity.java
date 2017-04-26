@@ -212,8 +212,6 @@ public class MainActivity extends Activity {
 
         inputText.setText("");
 
-        Toast.makeText(MainActivity.this,"Screen width:" + screenWidth,Toast.LENGTH_SHORT).show();
-
         switchIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

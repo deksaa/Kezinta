@@ -56,7 +56,7 @@
                 android:id="@+id/switchIconView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:si_animation_duration="100"
+                app:si_animation_duration="300"
                 app:si_tint_color="@color/inputWordColor"
                 app:srcCompat="@drawable/ic_sound"
                 />
@@ -73,6 +73,12 @@
         android:layout_height="0dp"
         android:layout_weight="8">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:background="@drawable/gradient_line"></LinearLayout>
+
     </LinearLayout>
 
     <!--It contains input word which is entered by user-->
@@ -80,21 +86,37 @@
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:background="@drawable/gradient_line"
+        android:orientation="vertical"
         android:layout_weight="2"
-        android:paddingBottom="5dp"
+        android:paddingBottom="15dp"
+        android:weightSum="10"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:background="@drawable/gradient_line"
+            android:layout_weight="1"></LinearLayout>
 
         <TextView
             android:id="@+id/inputText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="dsasdas"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:text="KEZİNTA"
             android:textAlignment="center"
             android:textIsSelectable="false"
             android:textSize="60sp"
             android:textColor="@color/inputWordColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_line"
+            android:layout_weight="1"></LinearLayout>
 
     </LinearLayout>
 

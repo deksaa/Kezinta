@@ -1,9 +1,12 @@
 package com.example.destan.kezintagame;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -12,14 +15,18 @@ import android.widget.ImageView;
 
 public class SplashScreen extends Activity {
 
+    Runnable runnable;
+    Handler handler;
 
-Runnable runnable;
-Handler handler = new Handler();
+    AlphaAnimation alphaAnimation;
+    ImageView myLogo;
 
-AlphaAnimation alphaAnimation;
-ImageView myLogo;
+    boolean isStart;
 
-boolean isStart;
+    private void init(){
+        handler = new Handler();
+        myLogo = (ImageView)findViewById(R.id.myLogo);
+    }
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +37,9 @@ protected void onCreate(Bundle savedInstanceState) {
 
     setContentView(R.layout.activity_splash);
 
-    myLogo = (ImageView)findViewById(R.id.myLogo);
+    this.init();
 
-    startAnimation(1500,5500);
+    startAnimation(2000,5500);
 
 }
 

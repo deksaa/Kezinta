@@ -16,6 +16,7 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="40dp"
@@ -67,47 +68,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:weightSum="3"
         android:orientation="horizontal"
         android:padding="10dp">
 
 
         <ImageView
             android:id="@+id/shareButton"
-            android:layout_width="50dp"
+            android:layout_width="1dp"
             android:layout_height="50dp"
             android:src="@drawable/share"
             android:gravity="center"
             android:layout_marginTop="60dp"
-            android:layout_weight="0.25" />
+            android:layout_weight="1" />
 
-
-        <ImageView
-            android:id="@+id/settingsButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/setting"
-            android:gravity="center"
-            android:layout_marginTop="60dp"
-            android:layout_weight="0.25" />
 
         <ImageView
             android:id="@+id/rankButton"
-            android:layout_width="50dp"
+            android:layout_width="1dp"
             android:layout_height="50dp"
             android:src="@drawable/rankbutton"
             android:gravity="center"
             android:layout_marginTop="60dp"
-            android:layout_weight="0.25" />
+            android:layout_weight="1" />
 
 
         <ImageView
             android:id="@+id/noAdsButton"
-            android:layout_width="50dp"
+            android:layout_width="1dp"
             android:layout_height="50dp"
             android:src="@drawable/noads"
             android:gravity="center"
             android:layout_marginTop="60dp"
-            android:layout_weight="0.25"/>
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

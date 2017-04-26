@@ -5,38 +5,68 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class MenuActivity extends Activity {
 
-    private MediaPlayer music;
+    /*private MediaPlayer music;
     private int duration;
-    private boolean musicFlag;
+    private boolean musicFlag;*/
 
-    ImageView playButton, noAdsButton, settingsButton, shareButton, rankButton;
+    AlphaAnimation alphaAnimation;
+
+    ImageView playButton, noAdsButton, shareButton, rankButton, logo;
 
     RotateAnimation rotateRight;
     RotateAnimation rotateLeft;
 
+    List<ImageView> imageViews = new ArrayList<>();
+
+
     private void init() {
+        logo = (ImageView)findViewById(R.id.logo);
         playButton = (ImageView) findViewById(R.id.playButton);
         noAdsButton = (ImageView) findViewById(R.id.noAdsButton);
-        settingsButton = (ImageView) findViewById(R.id.settingsButton);
         shareButton = (ImageView) findViewById(R.id.shareButton);
         rankButton = (ImageView) findViewById(R.id.rankButton);
 
+        imageViews.add(logo);
+        imageViews.add(playButton);
+        imageViews.add(noAdsButton);
+        imageViews.add(shareButton);
+        imageViews.add(rankButton);
+
+        logo.setVisibility(View.INVISIBLE);
+        playButton.setVisibility(View.INVISIBLE);
+        noAdsButton.setVisibility(View.INVISIBLE);
+        shareButton.setVisibility(View.INVISIBLE);
+        rankButton.setVisibility(View.INVISIBLE);
+    }
+
+    private void startRotateAnimation(ImageView imageView){
         rotateRight = new RotateAnimation(-2, 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateLeft = new RotateAnimation(2, 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -49,7 +79,19 @@ public class MenuActivity extends Activity {
         rotateLeft.setRepeatCount(Animation.INFINITE);
         rotateRight.setRepeatCount(Animation.INFINITE);
 
-        playButton.setAnimation(rotateRight);
+        imageView.setAnimation(rotateRight);
+    }
+
+    private void startIntroAnimation(int duration){
+        for(final ImageView imageView : imageViews){
+            imageView.setVisibility(View.VISIBLE);
+            alphaAnimation = new AlphaAnimation(0.0f,1.0f);
+            alphaAnimation.setDuration(duration);
+            imageView.startAnimation(alphaAnimation);
+            if(imageView.equals(playButton))
+                startRotateAnimation(playButton);
+            duration+=500;
+        }
     }
 
     @Override
@@ -62,6 +104,7 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
 
         init();
+
 
         playButton.setOnTouchListener(new View.OnTouchListener() {
 
@@ -82,7 +125,7 @@ public class MenuActivity extends Activity {
                         //clear the overlay
                         view.getDrawable().clearColorFilter();
                         view.invalidate();
-                        music.stop();
+                        //music.stop();
                         Intent goToMainActivity = new Intent(MenuActivity.this, MainActivity.class);
                         MenuActivity.this.finish();
                         startActivity(goToMainActivity);
@@ -95,33 +138,6 @@ public class MenuActivity extends Activity {
         });
 
         noAdsButton.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        break;
-                    }
-                }
-
-                return true;
-            }
-        });
-
-        settingsButton.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -201,44 +217,6 @@ public class MenuActivity extends Activity {
                 return true;
             }
         });
-/*
-        rotateRight.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                rotateLeft.setFillAfter(true);
-                rotateRight.cancel();
-                playButton.setAnimation(rotateLeft);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        rotateLeft.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                rotateLeft.setFillAfter(true);
-                rotateLeft.cancel();
-                playButton.setAnimation(rotateRight);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });*/
     }
 
 
@@ -246,25 +224,15 @@ public class MenuActivity extends Activity {
         @Override
         protected void onStart () {
             super.onStart();
-            music = MediaPlayer.create(MenuActivity.this, R.raw.menumusic);
-            music.start();
-            music.setLooping(true);
+            startIntroAnimation(1200);
         }
         @Override
         protected void onPause () {
             super.onPause();
-            duration = music.getCurrentPosition();
-            music.pause();
-            musicFlag = true;
         }
 
         @Override
         protected void onResume () {
             super.onResume();
-            if (musicFlag) {
-                music.seekTo(duration);
-                music.start();
-            }
-
         }
     }
