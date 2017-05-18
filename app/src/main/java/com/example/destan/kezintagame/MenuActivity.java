@@ -1,17 +1,18 @@
 package com.example.destan.kezintagame;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
@@ -24,13 +25,19 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class MenuActivity extends Activity {
+public class MenuActivity extends FragmentActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     /*private MediaPlayer music;
     private int duration;
@@ -45,9 +52,15 @@ public class MenuActivity extends Activity {
 
     List<ImageView> imageViews = new ArrayList<>();
 
+    public GoogleApiClient mGoogleApiClient;
+
+    private static int RC_SIGN_IN = 9001;
+
+    private boolean mUserRequestedSignIn = false;
+
 
     private void init() {
-        logo = (ImageView)findViewById(R.id.logo);
+        logo = (ImageView) findViewById(R.id.logo);
         playButton = (ImageView) findViewById(R.id.playButton);
         noAdsButton = (ImageView) findViewById(R.id.noAdsButton);
         shareButton = (ImageView) findViewById(R.id.shareButton);
@@ -66,7 +79,7 @@ public class MenuActivity extends Activity {
         rankButton.setVisibility(View.INVISIBLE);
     }
 
-    private void startRotateAnimation(ImageView imageView){
+    private void startRotateAnimation(ImageView imageView) {
         rotateRight = new RotateAnimation(-2, 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateLeft = new RotateAnimation(2, 2, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -82,15 +95,15 @@ public class MenuActivity extends Activity {
         imageView.setAnimation(rotateRight);
     }
 
-    private void startIntroAnimation(int duration){
-        for(final ImageView imageView : imageViews){
+    private void startIntroAnimation(int duration) {
+        for (final ImageView imageView : imageViews) {
             imageView.setVisibility(View.VISIBLE);
-            alphaAnimation = new AlphaAnimation(0.0f,1.0f);
+            alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
             alphaAnimation.setDuration(duration);
             imageView.startAnimation(alphaAnimation);
-            if(imageView.equals(playButton))
+            if (imageView.equals(playButton))
                 startRotateAnimation(playButton);
-            duration+=500;
+            duration += 500;
         }
     }
 
@@ -99,10 +112,16 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_menu);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addApi(Games.API)
+                .addScope(Games.SCOPE_GAMES)
+                .build();
         init();
 
 
@@ -220,19 +239,47 @@ public class MenuActivity extends Activity {
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+        startIntroAnimation(1200);
+    }
 
-        @Override
-        protected void onStart () {
-            super.onStart();
-            startIntroAnimation(1200);
-        }
-        @Override
-        protected void onPause () {
-            super.onPause();
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
-        @Override
-        protected void onResume () {
-            super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.e("Status:", "Error...");
+        Log.e("Message:", "ERROR CODE:" + connectionResult.getErrorCode());
+
+        if (!mUserRequestedSignIn) {
+            if (connectionResult.hasResolution()) {
+                try {
+                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                } catch (IntentSender.SendIntentException e) {
+                    Log.e("Error:", e.getMessage());
+                }
+            }
         }
     }
+}

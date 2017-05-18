@@ -1,17 +1,34 @@
 package com.example.destan.kezintagame;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+
+
+
+/*
+
+Error:Execution failed for task ':app:transformClassesWithDexForDebug'.
+> com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException: java.util.concurrent.ExecutionException: com.android.dex.DexIndexOverflowException: method ID not in [0, 0xffff]: 65536
+ */
 
 public class SplashScreen extends Activity {
 
@@ -23,45 +40,69 @@ public class SplashScreen extends Activity {
 
     boolean isStart;
 
-    private void init(){
+    private void init() {
         handler = new Handler();
-        myLogo = (ImageView)findViewById(R.id.myLogo);
+        myLogo = (ImageView) findViewById(R.id.myLogo);
     }
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
 
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
-    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("Information:","OnCreate work.");
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash);
 
-    this.init();
+        this.init();
 
-    startAnimation(2000,5500);
+    }
 
-}
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("Information:","OnStart work.");
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.i("Information:","OnResume work.");
+        startAnimation(2000, 5500);
+    }
 
-private void startAnimation(final int animationDuration, final int totalDuration){
-    runnable = new Runnable() {
-        @Override
-        public void run() {
-            if(!isStart){
-                alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-                alphaAnimation.setDuration(animationDuration);
-                myLogo.startAnimation(alphaAnimation);
-                isStart = !isStart;
-                handler.postDelayed(runnable, totalDuration - animationDuration);
-            }else{
-                handler.removeCallbacks(runnable);
-                Intent goToMainActivity = new Intent(SplashScreen.this, MenuActivity.class);
-                SplashScreen.this.finish();
-                startActivity(goToMainActivity);
-                }
-            }
-        };runnable.run();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("Information:","OnDestroy work.");
+    }
+
+    private void goToMenuActivity(){
+        Log.i("Information:","goToMenuActivity() work.");
+        Intent goToMainActivity = new Intent(SplashScreen.this, MenuActivity.class);
+        SplashScreen.this.finish();
+        startActivity(goToMainActivity);
+    }
+
+    private void startAnimation(final int animationDuration, final int totalDuration) {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (!isStart) {
+                    alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+                    alphaAnimation.setDuration(animationDuration);
+                    myLogo.startAnimation(alphaAnimation);
+                    isStart = !isStart;
+                    handler.postDelayed(runnable, totalDuration - animationDuration);
+                    Log.d("Debug","Animation is waiting");
+                } else {
+                            handler.removeCallbacks(runnable);
+                            goToMenuActivity();
+                        }
+                    }
+            };
+        runnable.run();
     }
 }
 
