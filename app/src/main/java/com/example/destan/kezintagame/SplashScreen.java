@@ -97,9 +97,9 @@ public class SplashScreen extends Activity {
                     handler.postDelayed(runnable, totalDuration - animationDuration);
                     Log.d("Debug","Animation is waiting");
                 } else {
-                            handler.removeCallbacks(runnable);
-                            goToMenuActivity();
-                        }
+                    handler.removeCallbacks(runnable);
+                    goToMenuActivity();
+                }
                     }
             };
         runnable.run();

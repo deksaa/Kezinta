@@ -12,7 +12,7 @@
         android:id="@+id/myLogo"
         android:layout_height="150dp"
         android:layout_width="match_parent"
-        android:src="@drawable/logo"
+        android:src="@drawable/splashlogo"
         android:layout_gravity="center"
         android:layout_weight="1"
 
