@@ -98,6 +98,15 @@ public class MenuActivity extends FragmentActivity implements
         }
     }
 
+    private void applyColorFilter(ImageView image,boolean applied){
+        if(applied) {
+            image.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
+            image.invalidate();
+        }else{
+            image.getDrawable().clearColorFilter();
+            image.invalidate();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,19 +132,12 @@ public class MenuActivity extends FragmentActivity implements
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
-                        //music.stop();
+                        applyColorFilter((ImageView)v,false);
                         Intent goToMainActivity = new Intent(MenuActivity.this, MainActivity.class);
                         MenuActivity.this.finish();
                         startActivity(goToMainActivity);
@@ -154,18 +156,12 @@ public class MenuActivity extends FragmentActivity implements
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,false);
                         break;
                     }
                 }
@@ -181,18 +177,12 @@ public class MenuActivity extends FragmentActivity implements
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,false);
                         break;
                     }
                 }
@@ -206,18 +196,12 @@ public class MenuActivity extends FragmentActivity implements
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,false);
                         break;
                     }
                 }
@@ -232,18 +216,12 @@ public class MenuActivity extends FragmentActivity implements
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        ImageView view = (ImageView) v;
-                        //overlay is black with transparency of 0x77 (119)
-                        view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        ImageView view = (ImageView) v;
-                        //clear the overlay
-                        view.getDrawable().clearColorFilter();
-                        view.invalidate();
+                        applyColorFilter((ImageView) v,false);
                         break;
                     }
                 }
