@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
     LinearLayout keyboardView;
     LinearLayout inputView;
 
+    LinearLayout backGround;
+
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
 
@@ -62,6 +64,8 @@ public class MainActivity extends Activity {
         inputView = (LinearLayout)findViewById(R.id.inputLayout);
 
         keyboardImageViews = new ArrayList<>();
+
+        backGround = (LinearLayout)findViewById(R.id.activity_main);
 
         inputText = (TextView)findViewById(R.id.inputText);
 
@@ -140,16 +144,6 @@ public class MainActivity extends Activity {
 
     }
 
-    /*
-    * runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    // change UI elements here
-                    tv.setTextSize(currentTextSize - 1);
-                }
-            });
-     */
-
     private String backSpace(String str){
         char[] ch = str.toCharArray();
         str = "";
@@ -216,6 +210,15 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 switchIcon1.switchState();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (switchIcon1.isIconEnabled())
+                            backGround.setBackgroundDrawable((getResources().getDrawable(R.drawable.gradientbg)));
+                        else
+                            backGround.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_line));
+                    }
+                });
             }
         });
 

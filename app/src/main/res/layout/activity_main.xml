@@ -25,6 +25,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.2"
         android:padding="5dp">
+
         <com.github.zagum.switchicon.SwitchIconView
             android:id="@+id/switchIconView1"
             android:layout_width="match_parent"
