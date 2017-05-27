@@ -132,7 +132,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="top"
         android:paddingRight="2dp"
         android:paddingLeft="2dp"
@@ -144,96 +144,96 @@
             android:id="@+id/q"
             android:src="@drawable/q"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/w"
             android:src="@drawable/w"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/e"
             android:src="@drawable/e"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/r"
             android:src="@drawable/r"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/t"
             android:src="@drawable/t"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/y"
             android:src="@drawable/y"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/u"
             android:src="@drawable/u"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/ii"
             android:src="@drawable/ii"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/o"
             android:src="@drawable/o"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/p"
             android:src="@drawable/p"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/gi"
             android:src="@drawable/gi"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/ui"
             android:src="@drawable/ui"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         </LinearLayout>
@@ -248,30 +248,28 @@
             android:paddingRight="10dp"
             android:orientation="horizontal">
 
-
-
         <ImageView
             android:id="@+id/a"
             android:src="@drawable/a"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/s"
             android:src="@drawable/s"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/d"
             android:src="@drawable/d"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"
             />
 
@@ -279,16 +277,16 @@
             android:id="@+id/f"
             android:src="@drawable/f"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/g"
             android:src="@drawable/g"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"
             />
 
@@ -296,61 +294,61 @@
             android:id="@+id/h"
             android:src="@drawable/h"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/j"
             android:src="@drawable/j"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/k"
             android:src="@drawable/k"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/l"
             android:src="@drawable/l"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/si"
             android:src="@drawable/si"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/i"
             android:src="@drawable/i"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
             </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_gravity="bottom"
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
-            android:paddingBottom="2dp"
             android:weightSum="9"
+            android:paddingBottom="10dp"
             android:orientation="horizontal"
             >
 
@@ -358,56 +356,56 @@
             android:id="@+id/z"
             android:src="@drawable/z"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/x"
             android:src="@drawable/x"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/c"
             android:src="@drawable/c"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/v"
             android:src="@drawable/v"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/b"
             android:src="@drawable/b"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/n"
             android:src="@drawable/n"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/m"
             android:src="@drawable/m"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:tag="M"
             android:layout_weight="1"/>
 
@@ -415,16 +413,16 @@
             android:id="@+id/oi"
             android:src="@drawable/oi"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/ci"
             android:src="@drawable/ci"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
             </LinearLayout>

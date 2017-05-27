@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
 
         inputTextSize= inputText.getTextSize();
 
-        musicFlag = false;
+        musicFlag = true;
 
         readFromRaw();
     }
@@ -164,7 +164,6 @@ public class MainActivity extends Activity {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize - 3.5F);
     }
 
-
     private String filterForChars(String s){
 
         if(s.equals("ii"))
@@ -196,10 +195,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
 
         this.init();
@@ -350,27 +347,36 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
+        Log.i("OnStart Method worked.","MusicFlag value:" + musicFlag);
         music = MediaPlayer.create(MainActivity.this,R.raw.gamemod2);
         music.setLooping(true);
-        music.start();
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        duration = music.getCurrentPosition();
-        music.pause();
-        musicFlag = true;
+        if(musicFlag)
+            music.start();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+        Log.i("OnResume Method worked.","MusicFlag value:" + musicFlag);
         if(musicFlag) {
             music.seekTo(duration);
             music.start();
         }
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.i("OnPause Method worked.","MusicFlag value:" + musicFlag);
+        duration = music.getCurrentPosition();
+        music.pause();
+        if(!switchIcon2.isIconEnabled())
+            musicFlag = false;
+        else
+            musicFlag = true;
+    }
+
+
     @Override
     public void onBackPressed(){
         Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
