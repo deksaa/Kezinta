@@ -2,6 +2,8 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 /**
  * Created by destan on 28.05.2017.
@@ -19,8 +22,24 @@ import android.widget.LinearLayout;
 public class FragmentMenu extends Fragment {
 
     ImageView backImage;
+
     MenuActivity menuActivity;
+
     LinearLayout singleOption, multiOption, backOption;
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
+    public void removeFragmentMenu(){
+        fragmentManager = getFragmentManager();
+        FragmentMenu f = (FragmentMenu) fragmentManager.findFragmentByTag("Fragment_Menu");
+        fragmentTransaction = fragmentManager.beginTransaction();
+        if(f != null)
+            fragmentTransaction.remove(f).commit();
+        else
+            Toast.makeText(getActivity(),"Fragment not found",Toast.LENGTH_LONG).show();
+
+    }
 
     @Nullable
     @Override
@@ -61,12 +80,37 @@ public class FragmentMenu extends Fragment {
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         menuActivity.applyColorFilter(backImage, false);
+                        removeFragmentMenu();
                         break;
                     }
                 }
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("Menu Fragment:", "onPause is worked.");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Menu Fragment:", "onStop is worked.");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i("Menu Fragment:", "onDestroyView is worked.");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i("Menu Fragment:", "onDetach is worked.");
     }
 }
 
