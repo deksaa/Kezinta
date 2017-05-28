@@ -54,7 +54,8 @@
                 android:layout_weight="1"
                 android:text="Tek Oyuncu"
                 android:gravity="left|center"
-                android:textSize="28sp"/>
+                android:textSize="28sp"
+                android:textColor="@color/inputWordColor"/>
 
             </LinearLayout>
 
@@ -85,7 +86,8 @@
                 android:layout_weight="1"
                 android:text="Çok Oyunculu"
                 android:gravity="right|center"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:textColor="@color/inputWordColor"/>
 
 
             <ImageView
