@@ -264,7 +264,6 @@ public class MenuActivity extends FragmentActivity implements
         super.onResume();
     }
 
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 

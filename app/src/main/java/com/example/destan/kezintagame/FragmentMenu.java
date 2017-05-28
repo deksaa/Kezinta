@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -41,6 +43,20 @@ public class FragmentMenu extends Fragment {
 
     }
 
+    private void applyColorFilter(ImageView view,LinearLayout layout,Boolean applied){
+        if(applied) {
+            view.getDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            view.invalidate();
+            layout.setBackgroundColor(Color.parseColor("#dacb54"));
+            layout.invalidate();
+        }else{
+            view.getDrawable().clearColorFilter();
+            view.invalidate();
+            layout.setBackgroundColor(getResources().getColor(R.color.MainBackground));
+            layout.invalidate();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +65,8 @@ public class FragmentMenu extends Fragment {
 
         View view = inflater.inflate(R.layout.fragmentmenu, container, false);
 
-        singleOption = (LinearLayout) view.findViewById(R.id.singleLayout);
-        multiOption = (LinearLayout) view.findViewById(R.id.multiLayout);
+        singleOption = (LinearLayout) view.findViewById(R.id.singleLayoutIn);
+        multiOption = (LinearLayout) view.findViewById(R.id.multiLayoutIn);
         backOption = (LinearLayout) view.findViewById(R.id.goBackLayout);
 
         backImage = (ImageView) view.findViewById(R.id.back);
@@ -79,12 +95,14 @@ public class FragmentMenu extends Fragment {
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        menuActivity.applyColorFilter(singleImage, true);
+                        //menuActivity.applyColorFilter(singleImage, true);
+                        applyColorFilter(singleImage,singleOption,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        menuActivity.applyColorFilter(singleImage, false);
+                        //menuActivity.applyColorFilter(singleImage, false);
+                        applyColorFilter(singleImage,singleOption,false);
                         //Here for new activity
                         break;
                     }
@@ -93,17 +111,17 @@ public class FragmentMenu extends Fragment {
             }
         });
 
-        multiImage.setOnTouchListener(new View.OnTouchListener() {
+        multiOption.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        menuActivity.applyColorFilter(multiImage, true);
+                        applyColorFilter(multiImage,multiOption,true);
                         break;
                     }
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
-                        menuActivity.applyColorFilter(multiImage, false);
+                        applyColorFilter(multiImage,multiOption,false);
                         //Here for new activity
                         break;
                     }

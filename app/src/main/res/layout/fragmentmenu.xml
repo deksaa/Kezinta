@@ -19,12 +19,11 @@
             android:layout_gravity="center"
             android:src="@drawable/menulogo"/>
 
-
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/singleLayout"
+        android:id="@+id/singleLayoutOut"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/black_overlay"
@@ -32,6 +31,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/singleLayoutIn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/MainBackground"
@@ -64,13 +64,14 @@
 
 
     <LinearLayout
-        android:id="@+id/multiLayout"
+        android:id="@+id/multiLayoutOut"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/black_overlay"
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/multiLayoutIn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/MainBackground"
@@ -99,8 +100,6 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
 
 
@@ -118,9 +117,7 @@
                 android:src="@drawable/back"
                 />
 
-
     </LinearLayout>
-
 
 
 </LinearLayout>
