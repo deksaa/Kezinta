@@ -237,6 +237,17 @@ public class MenuActivity extends FragmentActivity implements
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         applyColorFilter((ImageView) v,false);
+                        try{
+                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                            shareIntent.setType("text/plain");
+                            shareIntent.putExtra(Intent.EXTRA_SUBJECT,"Kezinta - A new word game");
+                            String sAux = "\nKezinta on Google Play Store\n";
+                            sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, sAux);
+                            startActivity(Intent.createChooser(shareIntent, "Choose one for 'Kezinta'"));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         break;
                     }
                 }
