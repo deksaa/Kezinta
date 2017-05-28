@@ -104,7 +104,7 @@ public class MenuActivity extends FragmentActivity implements
         }
     }
 
-    private void applyColorFilter(ImageView image,boolean applied){
+    public void applyColorFilter(ImageView image,boolean applied){
         if(applied) {
             image.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
             image.invalidate();
