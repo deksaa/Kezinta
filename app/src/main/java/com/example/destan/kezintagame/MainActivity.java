@@ -379,6 +379,7 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed(){
+        Log.i("OnBackPressed worked.","Now go to MainActivity.");
         Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
         MainActivity.this.finish();
         startActivity(goToMenuActivity);

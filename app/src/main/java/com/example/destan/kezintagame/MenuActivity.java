@@ -1,5 +1,7 @@
 package com.example.destan.kezintagame;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.PorterDuff;
@@ -40,6 +42,10 @@ public class MenuActivity extends FragmentActivity implements
     RotateAnimation rotateLeft;
 
     List<ImageView> imageViews = new ArrayList<>();
+
+    FragmentMenu fragmentMenu;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     public GoogleApiClient mGoogleApiClient;
 
@@ -138,9 +144,18 @@ public class MenuActivity extends FragmentActivity implements
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         applyColorFilter((ImageView)v,false);
-                        Intent goToMainActivity = new Intent(MenuActivity.this, MainActivity.class);
+
+                        fragmentMenu = new FragmentMenu();
+                        fragmentManager = getFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.add(R.id.mainMenu,fragmentMenu,"Fragment_Menu");
+                        fragmentTransaction.commit();
+
+/*
+                        Intent goToMainActivity = new Intent(MenuActivity.this, testActivity.class);
                         MenuActivity.this.finish();
                         startActivity(goToMainActivity);
+*/
                         break;
                     }
                 }

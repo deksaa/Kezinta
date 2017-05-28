@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_menu2"
+    android:id="@+id/mainMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/MainBackground"
-    android:weightSum="9"
     tools:context="com.example.destan.kezintagame.MenuActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/MainBackground"
+        android:weightSum="9">
 
     <LinearLayout
         android:id="@+id/LogoLayout"
@@ -20,8 +24,7 @@
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/menulogo"
-            />
+            android:src="@drawable/menulogo" />
 
     </LinearLayout>
 
@@ -107,4 +110,6 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
