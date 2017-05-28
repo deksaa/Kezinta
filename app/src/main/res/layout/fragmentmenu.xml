@@ -14,8 +14,9 @@
         android:layout_weight="1">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:src="@drawable/menulogo"/>
 
 
@@ -40,6 +41,7 @@
             android:weightSum="2">
 
             <ImageView
+                android:id="@+id/singleImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src = "@drawable/single"
@@ -87,6 +89,7 @@
 
 
             <ImageView
+                android:id="@+id/multiImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/multi"

@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class FragmentMenu extends Fragment {
 
-    ImageView backImage;
+    ImageView backImage,singleImage,multiImage;
 
     MenuActivity menuActivity;
 
@@ -48,10 +48,14 @@ public class FragmentMenu extends Fragment {
         Log.i("Menu Fragment:", "onCreateView is worked.");
 
         View view = inflater.inflate(R.layout.fragmentmenu, container, false);
+
         singleOption = (LinearLayout) view.findViewById(R.id.singleLayout);
         multiOption = (LinearLayout) view.findViewById(R.id.multiLayout);
         backOption = (LinearLayout) view.findViewById(R.id.goBackLayout);
+
         backImage = (ImageView) view.findViewById(R.id.back);
+        singleImage = (ImageView) view.findViewById(R.id.singleImage);
+        multiImage = (ImageView) view.findViewById(R.id.multiImage);
 
         menuActivity = new MenuActivity();
 
@@ -68,6 +72,46 @@ public class FragmentMenu extends Fragment {
     public void onStart() {
         super.onStart();
         Log.i("Menu Fragment:", "onStart is worked.");
+
+        singleOption.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        menuActivity.applyColorFilter(singleImage, true);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL: {
+                        menuActivity.applyColorFilter(singleImage, false);
+                        //Here for new activity
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+
+        multiImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        menuActivity.applyColorFilter(multiImage, true);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL: {
+                        menuActivity.applyColorFilter(multiImage, false);
+                        //Here for new activity
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+
         backOption.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -87,6 +131,8 @@ public class FragmentMenu extends Fragment {
                 return true;
             }
         });
+
+
     }
 
     @Override
