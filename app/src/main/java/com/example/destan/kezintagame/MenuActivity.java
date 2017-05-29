@@ -285,6 +285,15 @@ public class MenuActivity extends FragmentActivity implements
     }
 
     @Override
+    public void onBackPressed(){
+        if(fragmentMenu!=null){
+            fragmentMenu.removeFragmentMenu();
+            fragmentMenu = null;
+        }
+
+    }
+
+    @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.i("onConnected():","onConnected() is worked.");
     }
