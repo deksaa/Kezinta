@@ -114,6 +114,15 @@ public class MenuActivity extends FragmentActivity implements
             image.invalidate();
         }
     }
+
+    private void getFragmentMenu(){
+        fragmentMenu = new FragmentMenu();
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.mainMenu,fragmentMenu,"Fragment_Menu");
+        fragmentTransaction.commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,22 +154,10 @@ public class MenuActivity extends FragmentActivity implements
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         applyColorFilter((ImageView)v,false);
-
-                        fragmentMenu = new FragmentMenu();
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.add(R.id.mainMenu,fragmentMenu,"Fragment_Menu");
-                        fragmentTransaction.commit();
-
-/*
-                        Intent goToMainActivity = new Intent(MenuActivity.this, testActivity.class);
-                        MenuActivity.this.finish();
-                        startActivity(goToMainActivity);
-*/
+                        getFragmentMenu();
                         break;
                     }
                 }
-
                 return true;
             }
         });
