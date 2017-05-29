@@ -18,6 +18,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -177,6 +178,10 @@ public class MenuActivity extends FragmentActivity implements
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         applyColorFilter((ImageView) v,false);
+                        Toast.makeText(MenuActivity.this,
+                                       "User:" + Games.Players
+                                               .getCurrentPlayer(mGoogleApiClient)
+                                               .getDisplayName(),Toast.LENGTH_LONG).show();
                         break;
                     }
                 }

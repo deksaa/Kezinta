@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -41,6 +42,12 @@ public class FragmentMenu extends Fragment {
         else
             Toast.makeText(getActivity(),"Fragment not found",Toast.LENGTH_LONG).show();
 
+    }
+
+    private void goToGamePlay(){
+        Intent goToMainActivity = new Intent(getActivity(), MainActivity.class);
+        getActivity().finish();
+        startActivity(goToMainActivity);
     }
 
     private void applyColorFilter(ImageView view,LinearLayout layout,Boolean applied){
@@ -104,6 +111,7 @@ public class FragmentMenu extends Fragment {
                         //menuActivity.applyColorFilter(singleImage, false);
                         applyColorFilter(singleImage,singleOption,false);
                         //Here for new activity
+                        goToGamePlay();
                         break;
                     }
                 }
@@ -123,6 +131,7 @@ public class FragmentMenu extends Fragment {
                     case MotionEvent.ACTION_CANCEL: {
                         applyColorFilter(multiImage,multiOption,false);
                         //Here for new activity
+                        goToGamePlay();
                         break;
                     }
                 }
