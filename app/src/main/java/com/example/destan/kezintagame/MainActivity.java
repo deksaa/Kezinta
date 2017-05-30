@@ -1,8 +1,11 @@
 package com.example.destan.kezintagame;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +51,8 @@ public class MainActivity extends Activity {
 
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
+
+    MenuActivity menuActivity;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
@@ -109,6 +114,8 @@ public class MainActivity extends Activity {
         inputTextSize= inputText.getTextSize();
 
         musicFlag = true;
+
+        menuActivity = new MenuActivity();
 
         readFromRaw();
     }
@@ -380,9 +387,59 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed(){
         Log.i("OnBackPressed worked.","Now go to MainActivity.");
-        Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
-        MainActivity.this.finish();
-        startActivity(goToMenuActivity);
+
+
+        final Dialog dialogue = new Dialog(MainActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
+        dialogue.setContentView(R.layout.dialogue);
+        final ImageView exitImage = (ImageView)dialogue.findViewById(R.id.exitAppView);
+        final ImageView stayImage = (ImageView)dialogue.findViewById(R.id.stayInAppView);
+        dialogue.setCancelable(true);
+        dialogue.show();
+
+        exitImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i("exitImage:","exitImage is touched.");
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            menuActivity.applyColorFilter(exitImage,true);
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL: {
+                            menuActivity.applyColorFilter(exitImage,false);
+                            Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
+                            MainActivity.this.finish();
+                            startActivity(goToMenuActivity);
+                            break;
+                        }
+                    }
+                return true;
+            }
+        });
+
+        stayImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i("stayImage:","stayImage is touched.");
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        menuActivity.applyColorFilter(stayImage,true);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL: {
+                        menuActivity.applyColorFilter(stayImage,false);
+                        dialogue.dismiss();
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+
     }
 }
+
 
