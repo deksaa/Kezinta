@@ -15,15 +15,15 @@
         android:id="@+id/TaskBarLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="top"
         android:layout_weight="1"
+        android:weightSum="10"
         android:orientation="horizontal">
 
         <!--Sun icon to change screen mode-->
         <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.2"
+        android:layout_weight="1"
         android:padding="5dp">
 
         <com.github.zagum.switchicon.SwitchIconView
@@ -33,26 +33,29 @@
             app:si_animation_duration="300"
             app:si_tint_color="@color/inputWordColor"
             app:srcCompat="@drawable/ic_sun2"/>
+
         </LinearLayout>
 
         <!--Fading text shower to inform user-->
         <com.tomer.fadingtextview.FadingTextView
             android:id="@+id/fadingTextView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:gravity="center"
-            android:layout_weight="0.05"
+            android:layout_weight="8"
             android:textSize="20sp"
             android:textColor="@color/inputWordColor"
             app:timeout="1000"
             app:texts="@array/txtStrings" />
+
         <!--It contain sound on/off icon-->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:layout_weight="1"
             android:padding="5dp">
+
             <com.github.zagum.switchicon.SwitchIconView
                 android:id="@+id/switchIconView2"
                 android:layout_width="match_parent"
@@ -61,6 +64,7 @@
                 app:si_tint_color="@color/inputWordColor"
                 app:srcCompat="@drawable/ic_sound"
                 />
+
         </LinearLayout>
 
     </LinearLayout>
