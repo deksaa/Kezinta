@@ -89,35 +89,26 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="2"
-        android:paddingBottom="15dp"
-        android:weightSum="10"
-        >
+        android:background="@color/black_overlay">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="top"
-            android:background="@drawable/gradient_line"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_height="match_parent"
+            android:background="@color/inputWordColor"
+            android:layout_margin="3dp">
 
-        <TextView
-            android:id="@+id/inputText"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_gravity="center"
-            android:layout_weight="8"
-            android:text="KEZİNTA"
-            android:textAlignment="center"
-            android:textIsSelectable="false"
-            android:textSize="60sp"
-            android:textColor="@color/inputWordColor"/>
+            <TextView
+                android:id="@+id/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="KEZİNTA"
+                android:textAlignment="center"
+                android:textIsSelectable="false"
+                android:textSize="60sp"
+                android:textColor="@color/MainBackground"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/gradient_line"
-            android:layout_weight="1"></LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
