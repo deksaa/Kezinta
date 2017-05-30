@@ -64,9 +64,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <!--It contains words which is entered by users-->
-
-
     <LinearLayout
         android:id="@+id/wordsLayout"
         android:orientation="vertical"
@@ -113,18 +112,17 @@
     </LinearLayout>
 
     <!--It contains key buttons to enter any charachter-->
-
     <LinearLayout
         android:id="@+id/keyboardLayout"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="0dp"
         android:layout_weight="3"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="3">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="top"
+        android:layout_height="0dp"
         android:paddingRight="2dp"
         android:paddingLeft="2dp"
         android:orientation="horizontal"
@@ -227,11 +225,11 @@
             android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:weightSum="11"
@@ -329,18 +327,18 @@
             android:scaleType="fitCenter"
             android:layout_weight="1"/>
 
-            </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_gravity="bottom"
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:weightSum="9"
-            android:paddingBottom="10dp"
             android:orientation="horizontal"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
             >
 
         <ImageView
@@ -417,6 +415,7 @@
             android:layout_weight="1"/>
 
             </LinearLayout>
+
     </LinearLayout>
 
     <!--It contains ad layout-->
