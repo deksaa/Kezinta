@@ -1,10 +1,13 @@
 package com.example.destan.kezintagame;
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,6 +53,9 @@ public class MenuActivity extends FragmentActivity implements
 
     private void init() {
         Log.i("init():","init() is worked.");
+
+        fragmentMenu = new FragmentMenu();
+
         logo = (ImageView) findViewById(R.id.logo);
         playButton = (ImageView) findViewById(R.id.playButton);
         noAdsButton = (ImageView) findViewById(R.id.noAdsButton);
@@ -114,7 +120,6 @@ public class MenuActivity extends FragmentActivity implements
 
     private void getFragmentMenu(){
         Log.i("getFragmentMenu():","getFragmentMenu() is worked.");
-        fragmentMenu = new FragmentMenu();
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.mainMenu,fragmentMenu,"Fragment_Menu");
@@ -286,9 +291,56 @@ public class MenuActivity extends FragmentActivity implements
 
     @Override
     public void onBackPressed(){
-        if(fragmentMenu!=null){
+        if(fragmentMenu.isVisible()){
             fragmentMenu.removeFragmentMenu();
-            fragmentMenu = null;
+        }else{
+            final Dialog dialogue = new Dialog(MenuActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
+            dialogue.setContentView(R.layout.dialogue);
+            final ImageView exitImage = (ImageView)dialogue.findViewById(R.id.exitAppView);
+            final ImageView stayImage = (ImageView)dialogue.findViewById(R.id.stayInAppView);
+            dialogue.setCancelable(true);
+            dialogue.show();
+
+            exitImage.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.i("exitImage:","exitImage is touched.");
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            applyColorFilter(exitImage,true);
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL: {
+                            applyColorFilter(exitImage,false);
+                            MenuActivity.this.finish();
+                            break;
+                        }
+                    }
+                    return true;
+                }
+            });
+
+            stayImage.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.i("stayImage:","stayImage is touched.");
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            applyColorFilter(stayImage,true);
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL: {
+                            applyColorFilter(stayImage,false);
+                            dialogue.dismiss();
+                            break;
+                        }
+                    }
+                    return true;
+                }
+            });
         }
 
     }

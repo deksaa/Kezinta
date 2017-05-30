@@ -34,20 +34,22 @@ public class FragmentMenu extends Fragment {
     FragmentTransaction fragmentTransaction;
 
     public void removeFragmentMenu(){
-        fragmentManager = getFragmentManager();
-        FragmentMenu f = (FragmentMenu) fragmentManager.findFragmentByTag("Fragment_Menu");
-        fragmentTransaction = fragmentManager.beginTransaction();
-        if(f != null)
-            fragmentTransaction.remove(f).commit();
-        else
-            Toast.makeText(getActivity(),"Fragment not found",Toast.LENGTH_LONG).show();
-
+        try {
+            fragmentManager = getFragmentManager();
+            menuActivity.fragmentMenu = (FragmentMenu) fragmentManager.findFragmentByTag("Fragment_Menu");
+            fragmentTransaction = fragmentManager.beginTransaction();
+            if (menuActivity.fragmentMenu != null)
+                fragmentTransaction.remove(menuActivity.fragmentMenu).commit();
+        }catch (NullPointerException npe){
+            Log.e("removeFragmentMenu():",npe.getMessage());
+        }
     }
 
     private void goToGamePlay(){
         Intent goToMainActivity = new Intent(getActivity(), MainActivity.class);
         getActivity().finish();
         startActivity(goToMainActivity);
+        //getActivity().overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
     private void applyColorFilter(ImageView view,LinearLayout layout,Boolean applied){
