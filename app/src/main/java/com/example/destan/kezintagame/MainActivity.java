@@ -2,10 +2,12 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -199,6 +201,14 @@ public class MainActivity extends Activity {
 
     }
 
+    private void setMusicLevel(float percent){
+        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        //int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int setVolume = (int) (maxVolume*percent);
+        audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,6 +217,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.init();
+
+        setMusicLevel(0.4f);
 
         inputText.setText("");
 
