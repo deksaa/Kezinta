@@ -400,7 +400,6 @@ public class MainActivity extends Activity {
     public void onBackPressed(){
         Log.i("OnBackPressed worked.","Now go to MainActivity.");
 
-
         final Dialog dialogue = new Dialog(MainActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
         dialogue.setContentView(R.layout.dialogue);
@@ -408,6 +407,7 @@ public class MainActivity extends Activity {
         final ImageView stayImage = (ImageView)dialogue.findViewById(R.id.stayInAppView);
         dialogue.setCancelable(true);
         dialogue.show();
+        setMusicLevel(0.1f);
 
         exitImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -443,6 +443,7 @@ public class MainActivity extends Activity {
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         menuActivity.applyColorFilter(stayImage,false);
+                        setMusicLevel(0.4f);
                         dialogue.dismiss();
                         break;
                     }
