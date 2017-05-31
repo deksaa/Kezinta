@@ -44,12 +44,13 @@ public class MainActivity extends Activity {
 
     TextView inputText;
 
-    FadingTextView fTextViewInfos;
+    //FadingTextView fTextViewInfos;
 
     LinearLayout keyboardView;
     LinearLayout inputView;
 
     LinearLayout backGround;
+    LinearLayout inputWordLayout;
 
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
@@ -65,14 +66,13 @@ public class MainActivity extends Activity {
         switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
         switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
 
-        fTextViewInfos = (FadingTextView) findViewById(R.id.fadingTextView);
+        //fTextViewInfos = (FadingTextView) findViewById(R.id.fadingTextView);
 
         keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
-        inputView = (LinearLayout)findViewById(R.id.inputLayout);
+        backGround = (LinearLayout)findViewById(R.id.activity_main);
+        inputWordLayout = (LinearLayout)findViewById(R.id.inputLayout);
 
         keyboardImageViews = new ArrayList<>();
-
-        backGround = (LinearLayout)findViewById(R.id.activity_main);
 
         inputText = (TextView)findViewById(R.id.inputText);
 
@@ -230,7 +230,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                         if (switchIcon1.isIconEnabled())
-                            backGround.setBackgroundDrawable((getResources().getDrawable(R.drawable.gradientbg)));
+                            backGround.setBackgroundDrawable((getResources().getDrawable(R.color.MainBackground)));
                         else
                             backGround.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_line));
                     }
@@ -292,9 +292,6 @@ public class MainActivity extends Activity {
                 }
             });
         }
-
-
-
 
     }
 

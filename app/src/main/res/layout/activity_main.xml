@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradientbg"
+    android:background="@color/MainBackground"
     android:weightSum="15"
     tools:context="com.example.destan.kezintagame.MainActivity">
 
@@ -36,7 +36,14 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8">
+        </LinearLayout>
+
         <!--Fading text shower to inform user-->
+        <!--
         <com.tomer.fadingtextview.FadingTextView
             android:id="@+id/fadingTextView"
             android:layout_width="0dp"
@@ -48,7 +55,7 @@
             android:textColor="@color/inputWordColor"
             app:timeout="1000"
             app:texts="@array/txtStrings" />
-
+        -->
         <!--It contain sound on/off icon-->
         <LinearLayout
             android:layout_width="0dp"
@@ -75,13 +82,20 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8">
+        android:layout_weight="8"
+        android:paddingTop="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:background="@color/black_overlay">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/gameActionLayout"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="top"
-            android:background="@drawable/gradient_line"></LinearLayout>
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 
