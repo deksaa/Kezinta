@@ -47,10 +47,9 @@ public class MainActivity extends Activity {
     //FadingTextView fTextViewInfos;
 
     LinearLayout keyboardView;
-    LinearLayout inputView;
-
     LinearLayout backGround;
     LinearLayout inputWordLayout;
+    LinearLayout wordsLayout;
 
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
@@ -71,6 +70,7 @@ public class MainActivity extends Activity {
         keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
         backGround = (LinearLayout)findViewById(R.id.activity_main);
         inputWordLayout = (LinearLayout)findViewById(R.id.inputLayout);
+        wordsLayout = (LinearLayout)findViewById(R.id.wordsLayout);
 
         keyboardImageViews = new ArrayList<>();
 
@@ -229,10 +229,16 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (switchIcon1.isIconEnabled())
+                        if (switchIcon1.isIconEnabled()) {
                             backGround.setBackgroundDrawable((getResources().getDrawable(R.color.MainBackground)));
-                        else
+                            inputWordLayout.setBackgroundColor(getResources().getColor(R.color.black_overlay));
+                            wordsLayout.setBackgroundColor(getResources().getColor(R.color.black_overlay));
+                        }
+                        else {
                             backGround.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_line));
+                            inputWordLayout.setBackgroundColor(getResources().getColor(R.color.gray_overlay));
+                            wordsLayout.setBackgroundColor(getResources().getColor(R.color.gray_overlay));
+                        }
                     }
                 });
             }
