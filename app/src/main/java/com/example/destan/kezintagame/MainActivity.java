@@ -21,19 +21,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.zagum.switchicon.SwitchIconView;
-import com.tomer.fadingtextview.FadingTextView;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.grantland.widget.AutofitTextView;
+
 public class MainActivity extends Activity {
 
     int duration;
-    float screenWidth;
     boolean musicFlag;
-    float inputTextSize;
 
     ArrayList wordCollection;//It stores the all of words
     List<String> wordListView;//It stores the all of the word that come from user
@@ -42,14 +41,12 @@ public class MainActivity extends Activity {
 
     MediaPlayer music;
 
-    TextView inputText;
-
-    //FadingTextView fTextViewInfos;
-
     LinearLayout keyboardView;
     LinearLayout backGround;
     LinearLayout inputWordLayout;
     LinearLayout wordsLayout;
+
+    AutofitTextView newInputTextView;
 
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
@@ -59,13 +56,8 @@ public class MainActivity extends Activity {
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init(){
 
-        //inputText = (TextView)findViewById(R.id.textInput);
-        //inputTextSize = inputText.getTextSize();
-
         switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
         switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
-
-        //fTextViewInfos = (FadingTextView) findViewById(R.id.fadingTextView);
 
         keyboardView = (LinearLayout)findViewById(R.id.keyboardLayout);
         backGround = (LinearLayout)findViewById(R.id.activity_main);
@@ -74,7 +66,7 @@ public class MainActivity extends Activity {
 
         keyboardImageViews = new ArrayList<>();
 
-        inputText = (TextView)findViewById(R.id.inputText);
+        newInputTextView = (AutofitTextView)findViewById(R.id.newInputText);
 
         keyboardImageViews.add((ImageView)findViewById(R.id.q));
         keyboardImageViews.add((ImageView)findViewById(R.id.w));
@@ -113,8 +105,6 @@ public class MainActivity extends Activity {
         wordListView = new ArrayList<>();
         inputImages = new ArrayList<>();
 
-        inputTextSize= inputText.getTextSize();
-
         musicFlag = true;
 
         menuActivity = new MenuActivity();
@@ -131,7 +121,6 @@ public class MainActivity extends Activity {
             return false;
 
     }
-
 
     //Read the .txt file line by line and store in wordCollection which type is ArrayList
     public void readFromRaw(){
@@ -162,17 +151,6 @@ public class MainActivity extends Activity {
         return str;
     }
 
-    private void increaseTextSize(TextView tv){
-        float currentTextSize = inputText.getTextSize();
-        if(currentTextSize < inputTextSize)
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize + 3.5F);
-    }
-
-    private void decreaseTextSize(TextView tv){
-        float currentTextSize = tv.getTextSize();
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,currentTextSize - 3.5F);
-    }
-
     private String filterForChars(String s){
 
         if(s.equals("ii"))
@@ -194,9 +172,9 @@ public class MainActivity extends Activity {
     }
 
     private void refreshInputText(String s){
-        if(inputText.getText().toString().length() < 15){
-            inputText.setText(inputText.getText().toString() + s);
-            decreaseTextSize(inputText);
+        if(newInputTextView.getText().toString().length() < 15){
+            newInputTextView.setText(newInputTextView.getText().toString() + s);
+            //decreaseTextSize(inputText);
         }
 
     }
@@ -218,9 +196,7 @@ public class MainActivity extends Activity {
 
         this.init();
 
-        setMusicLevel(0.4f);
-
-        inputText.setText("");
+        setMusicLevel(0.3f);
 
         switchIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,9 +235,9 @@ public class MainActivity extends Activity {
             }
         });
 
-        //This listener is used to delete last character.
 
-        inputText.setOnLongClickListener(new View.OnLongClickListener() {
+
+        newInputTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
@@ -270,12 +246,12 @@ public class MainActivity extends Activity {
             }
         });
 
-        inputText.setOnClickListener(new View.OnClickListener() {
+        //This listener is used to delete last character.
+        newInputTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     Log.i("User Action","Delete the last char");
-                    inputText.setText(backSpace(inputText.getText().toString()));
-                    increaseTextSize(inputText);
+                    newInputTextView.setText(backSpace(newInputTextView.getText().toString()));
             }
         });
 
