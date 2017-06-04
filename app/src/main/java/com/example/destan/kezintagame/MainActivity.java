@@ -12,8 +12,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -66,7 +69,7 @@ public class MainActivity extends Activity {
 
         keyboardImageViews = new ArrayList<>();
 
-        newInputTextView = (AutofitTextView)findViewById(R.id.newInputText);
+        newInputTextView = (AutofitTextView)findViewById(R.id.inputText);
 
         keyboardImageViews.add((ImageView)findViewById(R.id.q));
         keyboardImageViews.add((ImageView)findViewById(R.id.w));
@@ -187,6 +190,22 @@ public class MainActivity extends Activity {
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
     }
 
+    private void showCustomToast(String message){
+        LayoutInflater inflater = getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.custom_toast_id));
+
+        // The actual toast generated here.
+        Toast toast = new Toast(MainActivity.this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        TextView t = (TextView)layout.findViewById(R.id.info);
+        t.setText(message);
+        toast.setGravity(Gravity.TOP,0,0);
+        toast.setView(layout);
+        toast.show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,7 +259,8 @@ public class MainActivity extends Activity {
         newInputTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
+                showCustomToast("+25 Puan");
                 //send word to wordsLayout.
                 return true;
             }
@@ -381,7 +401,6 @@ public class MainActivity extends Activity {
         else
             musicFlag = true;
     }
-
 
     @Override
     public void onBackPressed(){

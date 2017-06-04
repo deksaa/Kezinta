@@ -114,21 +114,9 @@
             android:layout_height="match_parent"
             android:background="@color/inputWordColor"
             android:layout_margin="3dp">
-            <!--
-            <TextView
-                android:id="@+id/inputText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="KEZİNTA"
-                android:textAlignment="center"
-                android:textIsSelectable="false"
-                android:textSize="60sp"
-                android:textColor="@color/MainBackground"/>
-            -->
 
-            <me.grantland.widget.AutofitTextView
-                android:id="@+id/newInputText"
+               <me.grantland.widget.AutofitTextView
+                android:id="@+id/inputText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
