@@ -260,6 +260,16 @@ public class MainActivity extends Activity {
         });
 
         //This listener is used to delete last character.
+
+        inputText.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
+                //send word to wordsLayout.
+                return true;
+            }
+        });
+
         inputText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,7 +278,6 @@ public class MainActivity extends Activity {
                     increaseTextSize(inputText);
             }
         });
-
 
         for (final ImageView Image : keyboardImageViews){
             Image.setOnTouchListener(new View.OnTouchListener() {
@@ -293,7 +302,6 @@ public class MainActivity extends Activity {
                             break;
                         }
                     }
-
                     return true;
                 }
             });
