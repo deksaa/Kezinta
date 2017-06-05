@@ -3,11 +3,13 @@ package com.example.destan.kezintagame;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -314,6 +316,7 @@ public class MenuActivity extends FragmentActivity implements
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL: {
                             applyColorFilter(exitImage,false);
+                            dialogue.dismiss();
                             MenuActivity.this.finish();
                             break;
                         }

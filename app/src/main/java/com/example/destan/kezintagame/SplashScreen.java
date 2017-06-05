@@ -2,33 +2,13 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.Games;
-
-
-
-/*
-
-Error:Execution failed for task ':app:transformClassesWithDexForDebug'.
-> com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException: java.util.concurrent.ExecutionException: com.android.dex.DexIndexOverflowException: method ID not in [0, 0xffff]: 65536
- */
 
 public class SplashScreen extends Activity {
 
@@ -44,7 +24,6 @@ public class SplashScreen extends Activity {
         handler = new Handler();
         myLogo = (ImageView) findViewById(R.id.myLogo);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

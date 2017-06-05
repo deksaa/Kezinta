@@ -182,14 +182,6 @@ public class MainActivity extends Activity {
 
     }
 
-    private void setMusicLevel(float percent){
-        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        //int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int setVolume = (int) (maxVolume*percent);
-        audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
-    }
-
     private void showCustomToast(String message){
         LayoutInflater inflater = getLayoutInflater();
 
@@ -204,6 +196,14 @@ public class MainActivity extends Activity {
         toast.setGravity(Gravity.TOP,0,0);
         toast.setView(layout);
         toast.show();
+    }
+
+    public void setMusicLevel(float percent){
+        AudioManager audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        //int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int setVolume = (int) (maxVolume*percent);
+        audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
     }
 
     @Override
@@ -270,8 +270,11 @@ public class MainActivity extends Activity {
         newInputTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Log.i("User Action","Delete the last char");
+                Log.i("User Action","Delete the last char");
+                if(newInputTextView.getText().toString().length() != 0)
                     newInputTextView.setText(backSpace(newInputTextView.getText().toString()));
+                else
+                    showCustomToast("Silinecek harf kalmadı");
             }
         });
 
@@ -427,6 +430,7 @@ public class MainActivity extends Activity {
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL: {
                             menuActivity.applyColorFilter(exitImage,false);
+                            dialogue.dismiss();
                             Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
                             MainActivity.this.finish();
                             startActivity(goToMenuActivity);
@@ -449,7 +453,7 @@ public class MainActivity extends Activity {
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         menuActivity.applyColorFilter(stayImage,false);
-                        setMusicLevel(0.4f);
+                        setMusicLevel(0.3f);
                         dialogue.dismiss();
                         break;
                     }
