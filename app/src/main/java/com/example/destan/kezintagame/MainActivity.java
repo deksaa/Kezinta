@@ -2,6 +2,8 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -55,7 +57,9 @@ public class MainActivity extends Activity {
 
     MenuActivity menuActivity;
 
-    Thread thread;
+    WordListFragment wordListFragment;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init() {
@@ -112,6 +116,8 @@ public class MainActivity extends Activity {
         musicFlag = true;
 
         menuActivity = new MenuActivity();
+
+        wordListFragment = new WordListFragment();
 
         readFromRaw();
     }
@@ -206,6 +212,14 @@ public class MainActivity extends Activity {
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
     }
 
+    private void getWordListFragment(){
+        Log.i("getWordListFragment():","getWordListFragment() is worked.");
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.gameActionLayout,wordListFragment,"Word_List_Fragment");
+        fragmentTransaction.commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,6 +228,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.init();
+
+        getWordListFragment();
 
         setMusicLevel(0.3f);
 
