@@ -37,7 +37,6 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".testActivity"></activity>
     </application>
 
 </manifest>
