@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/MainBackground"
+    android:background="@drawable/main_background"
     android:weightSum="15"
     tools:context="com.example.destan.kezintagame.MainActivity">
 

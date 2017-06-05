@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuActivity extends FragmentActivity implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+            GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener {
 
     AlphaAnimation alphaAnimation;
 
@@ -316,7 +316,6 @@ public class MenuActivity extends FragmentActivity implements
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL: {
                             applyColorFilter(exitImage,false);
-                            dialogue.dismiss();
                             MenuActivity.this.finish();
                             break;
                         }

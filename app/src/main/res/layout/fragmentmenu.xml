@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="4"
-    android:background="@color/MainBackground">
+    android:background="@drawable/main_background">
 
     <!--Kezinta Logo is here-->
     <LinearLayout
