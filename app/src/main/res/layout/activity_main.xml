@@ -84,19 +84,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
-        android:paddingTop="4dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:background="@color/black_overlay">
+        android:padding="4dp"
+        >
 
-        <RelativeLayout
-            android:id="@+id/gameActionLayout"
+        <ListView
+            android:id="@+id/wordList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </RelativeLayout>
-
-
+            android:layout_height="match_parent"
+            android:background="@drawable/main_background"
+            android:scrollbars="none"
+            android:divider="@null"
+            android:dividerHeight="5dp"
+            android:padding="4dp" />
 
     </LinearLayout>
 
@@ -107,13 +106,8 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="2"
-        android:background="@color/black_overlay">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/inputWordColor"
-            android:layout_margin="3dp">
+        android:layout_margin="10dp"
+        android:background="@drawable/main_background">
 
                <me.grantland.widget.AutofitTextView
                 android:id="@+id/inputText"
@@ -125,10 +119,8 @@
                 android:maxLines="1"
                 android:textSize="50sp"
                 autofit:minTextSize="16sp"
-                android:textColor="@color/MainBackground"
+                android:textColor="@color/inputWordColor"
                 />
-
-        </RelativeLayout>
 
     </LinearLayout>
 

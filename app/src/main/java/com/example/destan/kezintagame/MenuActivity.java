@@ -72,11 +72,11 @@ public class MenuActivity extends FragmentActivity implements
         imageViews.add(rateButton);
         imageViews.add(noAdsButton);
 
-        logo.setVisibility(View.INVISIBLE);
-        playButton.setVisibility(View.INVISIBLE);
-        noAdsButton.setVisibility(View.INVISIBLE);
-        shareButton.setVisibility(View.INVISIBLE);
-        rankButton.setVisibility(View.INVISIBLE);
+        //logo.setVisibility(View.INVISIBLE);
+        //playButton.setVisibility(View.INVISIBLE);
+        //noAdsButton.setVisibility(View.INVISIBLE);
+        //shareButton.setVisibility(View.INVISIBLE);
+        //rankButton.setVisibility(View.INVISIBLE);
     }
 
     private void startRotateAnimation(ImageView imageView) {
@@ -94,6 +94,8 @@ public class MenuActivity extends FragmentActivity implements
         rotateRight.setRepeatCount(Animation.INFINITE);
 
         imageView.setAnimation(rotateRight);
+
+        imageView.setDrawingCacheEnabled(true);
     }
 
     private void startIntroAnimation(int duration) {
@@ -162,6 +164,8 @@ public class MenuActivity extends FragmentActivity implements
                 .build();
 
         this.init();
+
+        startRotateAnimation(playButton);
 
         playButton.setOnTouchListener(new View.OnTouchListener() {
 
@@ -276,7 +280,7 @@ public class MenuActivity extends FragmentActivity implements
         super.onStart();
         Log.i("onStart():","onStart() is worked.");
         mGoogleApiClient.connect();
-        startIntroAnimation(1200);
+        //startIntroAnimation(1200);
     }
 
     @Override

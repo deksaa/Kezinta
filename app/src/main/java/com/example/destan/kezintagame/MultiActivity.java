@@ -25,7 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.github.zagum.switchicon.SwitchIconView;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,7 +36,8 @@ import java.util.List;
 
 import me.grantland.widget.AutofitTextView;
 
-public class MainActivity extends Activity {
+public class MultiActivity extends Activity {
+
 
     int duration;
     boolean musicFlag;
@@ -60,6 +63,8 @@ public class MainActivity extends Activity {
     private SwitchIconView switchIcon2;
 
     MenuActivity menuActivity;
+
+    WordAdapter wordAdapter;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -200,7 +205,7 @@ public class MainActivity extends Activity {
                 (ViewGroup) findViewById(R.id.custom_toast_id));
 
         // The actual toast generated here.
-        Toast toast = new Toast(MainActivity.this);
+        Toast toast = new Toast(MultiActivity.this);
         toast.setDuration(Toast.LENGTH_SHORT);
         TextView t = (TextView) layout.findViewById(R.id.info);
         t.setText(message);
@@ -217,6 +222,16 @@ public class MainActivity extends Activity {
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
     }
 
+    private void scrollMyListViewToBottom() {
+        wordList.post(new Runnable() {
+            @Override
+            public void run() {
+                // Select the last row so it will scroll into view...
+                wordList.setSelection(wordAdapter.getCount() - 1);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,7 +241,7 @@ public class MainActivity extends Activity {
 
         this.init();
 
-        final WordAdapter wordAdapter = new WordAdapter(MainActivity.this,words);
+        wordAdapter = new WordAdapter(MultiActivity.this,words);
         wordList.setAdapter(wordAdapter);
 
         setMusicLevel(0.3f);
@@ -266,61 +281,6 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
-        newInputTextView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
-                showCustomToast("+25 Puan");
-                //send word to wordsLayout.
-            if(!newInputTextView.getText().toString().isEmpty()) {
-                words.add(new Word(newInputTextView.getText().toString()));
-                wordAdapter.notifyDataSetChanged();
-            }
-                return true;
-            }
-        });
-
-        //This listener is used to delete last character.
-        newInputTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("User Action", "Delete the last char");
-                if (newInputTextView.getText().toString().length() != 0)
-                    newInputTextView.setText(backSpace(newInputTextView.getText().toString()));
-                else
-                    showCustomToast("Silinecek harf kalmadı");
-            }
-        });
-
-        for (final ImageView Image : keyboardImageViews) {
-            Image.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN: {
-                            ImageView view = (ImageView) v;
-                            //overlay is black with transparency of 0x77 (119)
-                            view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
-                            view.invalidate();
-                            break;
-                        }
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL: {
-                            ImageView view = (ImageView) v;
-                            refreshInputText(filterForChars(Image.getResources().getResourceEntryName(v.getId())));
-                            //clear the overlay
-                            view.getDrawable().clearColorFilter();
-                            view.invalidate();
-                            break;
-                        }
-                    }
-                    return true;
-                }
-            });
-        }
 
     }
 
@@ -393,11 +353,66 @@ public class MainActivity extends Activity {
     protected void onStart() {
         super.onStart();
         Log.i("OnStart Method worked.", "MusicFlag value:" + musicFlag);
-        music = MediaPlayer.create(MainActivity.this, R.raw.gamemod2);
+        music = MediaPlayer.create(MultiActivity.this, R.raw.gamemod2);
         music.setLooping(true);
-        if (musicFlag) {
+        if (musicFlag)
             music.start();
+
+        newInputTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
+                showCustomToast("+25 Puan");
+                //send word to wordsLayout.
+                if(!newInputTextView.getText().toString().isEmpty()) {
+                    words.add(new Word(newInputTextView.getText().toString()));
+                    wordAdapter.notifyDataSetChanged();
+                    scrollMyListViewToBottom();
+                }
+                return true;
+            }
+        });
+
+        //This listener is used to delete last character.
+        newInputTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("User Action", "Delete the last char");
+                if (newInputTextView.getText().toString().length() != 0)
+                    newInputTextView.setText(backSpace(newInputTextView.getText().toString()));
+                else
+                    showCustomToast("Silinecek harf kalmadı");
+            }
+        });
+
+        for (final ImageView Image : keyboardImageViews) {
+            Image.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            ImageView view = (ImageView) v;
+                            //overlay is black with transparency of 0x77 (119)
+                            view.getDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.SRC_ATOP);
+                            view.invalidate();
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL: {
+                            ImageView view = (ImageView) v;
+                            refreshInputText(filterForChars(Image.getResources().getResourceEntryName(v.getId())));
+                            //clear the overlay
+                            view.getDrawable().clearColorFilter();
+                            view.invalidate();
+                            break;
+                        }
+                    }
+                    return true;
+                }
+            });
         }
+
 
     }
 
@@ -427,7 +442,7 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
         Log.i("OnBackPressed worked.", "Now go to MainActivity.");
 
-        final Dialog dialogue = new Dialog(MainActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        final Dialog dialogue = new Dialog(MultiActivity.this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
         dialogue.setContentView(R.layout.dialogue);
         final ImageView exitImage = (ImageView) dialogue.findViewById(R.id.exitAppView);
@@ -449,8 +464,8 @@ public class MainActivity extends Activity {
                     case MotionEvent.ACTION_CANCEL: {
                         menuActivity.applyColorFilter(exitImage, false);
                         dialogue.dismiss();
-                        Intent goToMenuActivity = new Intent(MainActivity.this, MenuActivity.class);
-                        MainActivity.this.finish();
+                        Intent goToMenuActivity = new Intent(MultiActivity.this, MenuActivity.class);
+                        MultiActivity.this.finish();
                         startActivity(goToMenuActivity);
                         break;
                     }
@@ -482,5 +497,3 @@ public class MainActivity extends Activity {
 
     }
 }
-
-

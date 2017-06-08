@@ -28,6 +28,8 @@ public class FragmentMenu extends Fragment {
 
     MenuActivity menuActivity;
 
+    Intent goToGameActivity;
+
     LinearLayout singleOption, multiOption, backOption;
 
     FragmentManager fragmentManager;
@@ -45,11 +47,14 @@ public class FragmentMenu extends Fragment {
         }
     }
 
-    private void goToGamePlay(){
-        Intent goToMainActivity = new Intent(getActivity(), MainActivity.class);
+    private void goToGamePlay(int flag){
+        if(flag == 0)
+            goToGameActivity = new Intent(getActivity(), SingleActivity.class);
+        else
+            goToGameActivity = new Intent(getActivity(),MultiActivity.class);
+
         getActivity().finish();
-        startActivity(goToMainActivity);
-        //getActivity().overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
+        startActivity(goToGameActivity);
     }
 
     private void applyColorFilter(ImageView view,LinearLayout layout,Boolean applied){
@@ -113,7 +118,7 @@ public class FragmentMenu extends Fragment {
                         //menuActivity.applyColorFilter(singleImage, false);
                         applyColorFilter(singleImage,singleOption,false);
                         //Here for new activity
-                        goToGamePlay();
+                        goToGamePlay(0);
                         break;
                     }
                 }
@@ -133,7 +138,7 @@ public class FragmentMenu extends Fragment {
                     case MotionEvent.ACTION_CANCEL: {
                         applyColorFilter(multiImage,multiOption,false);
                         //Here for new activity
-                        goToGamePlay();
+                        goToGamePlay(1);
                         break;
                     }
                 }
