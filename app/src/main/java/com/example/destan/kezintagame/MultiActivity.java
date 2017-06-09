@@ -47,7 +47,7 @@ public class MultiActivity extends Activity {
     List<ImageView> keyboardImageViews;
     ArrayList<ImageView> inputImages;
 
-    List<Word> words;
+    List<GameLogic> words;
     ListView wordList;
 
     MediaPlayer music;
@@ -146,7 +146,7 @@ public class MultiActivity extends Activity {
     public void readFromRaw() {
 
         try {
-            InputStream fis = this.getResources().openRawResource(R.raw.turkish_db);
+            InputStream fis = this.getResources().openRawResource(R.raw.turkish_words);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
             String line;
@@ -364,11 +364,13 @@ public class MultiActivity extends Activity {
                 //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
                 showCustomToast("+25 Puan");
                 //send word to wordsLayout.
+                /*
                 if(!newInputTextView.getText().toString().isEmpty()) {
                     words.add(new Word(newInputTextView.getText().toString()));
                     wordAdapter.notifyDataSetChanged();
                     scrollMyListViewToBottom();
                 }
+                */
                 return true;
             }
         });

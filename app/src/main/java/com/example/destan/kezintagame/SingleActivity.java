@@ -41,6 +41,7 @@ public class SingleActivity extends Activity {
 
 
     int duration;
+    int turnCounter;
     boolean musicFlag;
 
     ArrayList wordCollection;//It stores the all of words
@@ -48,7 +49,7 @@ public class SingleActivity extends Activity {
     List<ImageView> keyboardImageViews;
     ArrayList<ImageView> inputImages;
 
-    List<Word> words;
+    List<GameLogic> words;
     ListView wordList;
 
     MediaPlayer music;
@@ -74,6 +75,8 @@ public class SingleActivity extends Activity {
     public void init() {
 
         words = new ArrayList<>();
+
+        WordStore.setStore(getApplicationContext(),R.raw.turkish_words);
 
         switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
         switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
@@ -120,6 +123,8 @@ public class SingleActivity extends Activity {
         keyboardImageViews.add((ImageView) findViewById(R.id.oi));
         keyboardImageViews.add((ImageView) findViewById(R.id.ci));
 
+        turnCounter = 0;
+
         wordCollection = new ArrayList<>();
         wordListView = new ArrayList<>();
         inputImages = new ArrayList<>();
@@ -147,7 +152,7 @@ public class SingleActivity extends Activity {
     public void readFromRaw() {
 
         try {
-            InputStream fis = this.getResources().openRawResource(R.raw.turkish_db);
+            InputStream fis = this.getResources().openRawResource(R.raw.turkish_words);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
             String line;
@@ -247,6 +252,8 @@ public class SingleActivity extends Activity {
 
         setMusicLevel(0.3f);
 
+        showCustomToast("Bir kelime girin.");
+
         switchIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,13 +295,46 @@ public class SingleActivity extends Activity {
             @Override
             public boolean onLongClick(View v) {
                 //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
-                showCustomToast("+25 Puan");
+                //showCustomToast("+25 Puan");
                 //send word to wordsLayout.
-                if(!newInputTextView.getText().toString().isEmpty()) {
-                    words.add(new Word(newInputTextView.getText().toString()));
-                    wordAdapter.notifyDataSetChanged();
-                    scrollMyListViewToBottom();
+                //if(!newInputTextView.getText().toString().isEmpty()) {
+                //    words.add(new Word(newInputTextView.getText().toString()));
+                //    wordAdapter.notifyDataSetChanged();
+                //    scrollMyListViewToBottom();
+                //}
+                if(turnCounter == 0) {
+
+                    if(!newInputTextView.getText().toString().isEmpty() && WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase())){
+                        words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
+                        wordAdapter.notifyDataSetChanged();
+                        newInputTextView.setText("");
+                        showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
+                        words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
+                        wordAdapter.notifyDataSetChanged();
+                        turnCounter++;
+                    }else{
+                        showCustomToast("Boş veya geçersiz kelime.");
+                    }
                 }
+
+                else{
+                    if(!newInputTextView.getText().toString().isEmpty() &&
+                       WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase()) &&
+                       newInputTextView.getText().toString().toLowerCase().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))){
+
+                        words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
+                        wordAdapter.notifyDataSetChanged();
+                        newInputTextView.setText("");
+                        scrollMyListViewToBottom();
+                        showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
+                        words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
+                        wordAdapter.notifyDataSetChanged();
+                        scrollMyListViewToBottom();
+                    }
+                    else
+                        showCustomToast("Geçersiz kelime.");
+                }
+
                 return true;
             }
         });

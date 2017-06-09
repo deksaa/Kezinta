@@ -35,7 +35,7 @@ import java.util.List;
 import me.grantland.widget.AutofitTextView;
 
 public class MainActivity extends Activity {
-
+/*
     int duration;
     boolean musicFlag;
 
@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
     public void readFromRaw() {
 
         try {
-            InputStream fis = this.getResources().openRawResource(R.raw.turkish_db);
+            InputStream fis = this.getResources().openRawResource(R.raw.turkish_words);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
             String line;
@@ -386,7 +386,7 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        */
+
 
 
     @Override
@@ -481,6 +481,8 @@ public class MainActivity extends Activity {
         });
 
     }
+
+    */
 }
 
 

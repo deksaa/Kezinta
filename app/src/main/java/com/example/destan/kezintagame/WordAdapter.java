@@ -19,9 +19,9 @@ import java.util.List;
 public class WordAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
-    private List<Word> mWords;
+    private List<GameLogic> mWords;
 
-    public WordAdapter(Activity context, List<Word> words) {
+    public WordAdapter(Activity context, List<GameLogic> words) {
         //XML'i alıp View'a çevirecek inflater'ı örnekleyelim
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //gösterilecek listeyi de alalım
@@ -34,7 +34,7 @@ public class WordAdapter extends BaseAdapter {
     }
 
     @Override
-    public Word getItem(int position) {
+    public GameLogic getItem(int position) {
         return mWords.get(position);
     }
 
@@ -51,11 +51,10 @@ public class WordAdapter extends BaseAdapter {
 
         TextView textView = (TextView) rowView.findViewById(R.id.word);
 
-        Word word = mWords.get(position);
+        GameLogic word = mWords.get(position);
 
         textView.setText(word.getWord());
 
         return rowView;
-
     }
 }
