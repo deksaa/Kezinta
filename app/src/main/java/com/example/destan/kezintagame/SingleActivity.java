@@ -262,13 +262,13 @@ public class SingleActivity extends Activity {
                     @Override
                     public void run() {
                         if (switchIcon1.isIconEnabled()) {
-                            backGround.setBackgroundDrawable((getResources().getDrawable(R.color.MainBackground)));
-                            inputWordLayout.setBackgroundColor(getResources().getColor(R.color.black_overlay));
-                            wordsLayout.setBackgroundColor(getResources().getColor(R.color.black_overlay));
+                            backGround.setBackgroundResource(R.color.MainBackground);
+                            wordList.setBackgroundResource(R.drawable.background_day);
+                            inputWordLayout.setBackgroundResource(R.drawable.background_day);
                         } else {
-                            backGround.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_line));
-                            inputWordLayout.setBackgroundColor(getResources().getColor(R.color.gray_overlay));
-                            wordsLayout.setBackgroundColor(getResources().getColor(R.color.gray_overlay));
+                            backGround.setBackgroundResource(R.color.black);
+                            wordList.setBackgroundResource(R.drawable.background_night);
+                            inputWordLayout.setBackgroundResource(R.drawable.background_night);
                         }
                     }
                 });

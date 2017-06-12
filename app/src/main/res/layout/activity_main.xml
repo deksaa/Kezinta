@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/main_background"
+    android:background="@drawable/background_day"
     android:weightSum="15"
     tools:context="com.example.destan.kezintagame.MainActivity">
 
@@ -91,7 +91,7 @@
             android:id="@+id/wordList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/main_background"
+            android:background="@drawable/background_day"
             android:scrollbars="none"
             android:divider="@null"
             android:dividerHeight="5dp"
@@ -107,7 +107,7 @@
         android:orientation="vertical"
         android:layout_weight="2"
         android:layout_margin="10dp"
-        android:background="@drawable/main_background">
+        android:background="@drawable/background_day">
 
                <me.grantland.widget.AutofitTextView
                 android:id="@+id/inputText"
@@ -444,7 +444,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Reklam alanı"
-            android:textColor="@color/soft"
             android:gravity="center_horizontal"
             android:textSize="30sp"/>
 
