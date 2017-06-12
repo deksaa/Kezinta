@@ -15,14 +15,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -165,7 +169,14 @@ public class MenuActivity extends FragmentActivity implements
 
         this.init();
 
-        startRotateAnimation(playButton);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                startRotateAnimation(playButton);
+            }
+        });
+
 
         playButton.setOnTouchListener(new View.OnTouchListener() {
 
@@ -319,7 +330,8 @@ public class MenuActivity extends FragmentActivity implements
                         }
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL: {
-                            applyColorFilter(exitImage,false);
+                            //applyColorFilter(exitImage,false);
+                            dialogue.dismiss();
                             MenuActivity.this.finish();
                             break;
                         }

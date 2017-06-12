@@ -1,10 +1,12 @@
 package com.example.destan.kezintagame;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -12,6 +14,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import com.google.android.gms.common.api.ResultCallback;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +33,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.zagum.switchicon.SwitchIconView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesStatusCodes;
+import com.google.android.gms.games.multiplayer.Invitation;
+import com.google.android.gms.games.multiplayer.Multiplayer;
+import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
+import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
+import com.google.android.gms.games.multiplayer.turnbased.OnTurnBasedMatchUpdateReceivedListener;
+import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
+import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
+import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMultiplayer;
+import com.google.example.games.basegameutils.BaseGameUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -36,7 +55,8 @@ import java.util.List;
 
 import me.grantland.widget.AutofitTextView;
 
-public class MultiActivity extends Activity {
+public class MultiActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        OnInvitationReceivedListener, OnTurnBasedMatchUpdateReceivedListener{
 
 
     int duration;
@@ -66,8 +86,29 @@ public class MultiActivity extends Activity {
 
     WordAdapter wordAdapter;
 
+    AlertDialog mAlertDialog;
+
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
+    private TurnBasedMatch mTurnBasedMatch;
+    public TurnBasedMatch mMatch;
+
+    public GoogleApiClient mGoogleApiClient;
+
+    private static final int RC_SIGN_IN = 9001;
+    final static int RC_SELECT_PLAYERS = 10000;
+    final static int RC_LOOK_AT_MATCHES = 10001;
+
+    public boolean isDoingTurn = false;
+
+    private boolean mResolvingConnectionFailure = false;
+
+    // Has the user clicked the sign-in button?
+    private boolean mSignInClicked = false;
+
+    // Automatically start the sign-in flow when the Activity starts
+    private boolean mAutoStartSignInFlow = true;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init() {
@@ -130,16 +171,6 @@ public class MultiActivity extends Activity {
         menuActivity = new MenuActivity();
 
         readFromRaw();
-    }
-
-    //Check the word if it exist and it's not repeated
-    public boolean checkWord(String word) {
-
-        if (wordCollection.contains(word) && !wordListView.contains(word))
-            return true;
-        else
-            return false;
-
     }
 
     //Read the .txt file line by line and store in wordCollection which type is ArrayList
@@ -239,7 +270,17 @@ public class MultiActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addApi(Games.API)
+                .addScope(Games.SCOPE_GAMES)
+                .build();
+
         this.init();
+
+
+
 
         wordAdapter = new WordAdapter(MultiActivity.this,words);
         wordList.setAdapter(wordAdapter);
@@ -284,71 +325,6 @@ public class MultiActivity extends Activity {
 
     }
 
-
-/*
-
-        ArrayAdapter<String> adapterGrid = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, letters);
-        final ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this,R.layout.my_text,R.id.textItem,wordListView);
-
-        gridKeyboard.setAdapter(adapterGrid);
-        listViewInputs.setAdapter(adapterList);
-
-        textGuess.setText("");
-
-        gridKeyboard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (!letters[position].equals("←") && !letters[position].equals("↪")) {
-
-                    guess += letters[position];
-                    guess = guess.toLowerCase();
-                    textGuess.setText(guess);
-
-
-                } else if (letters[position].equals("←")) {
-
-                    if (!guess.equals("")) {
-
-                        guess = guess.replaceFirst(String.valueOf(guess.charAt(guess.length() - 1)), "");
-                        textGuess.setText(guess);
-
-                    } else {
-
-                        Toast.makeText(MainActivity.this, "No letter to delete", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    if(!guess.equals("")){
-                        if(guess.startsWith(findLastChar(wordListView)) && checkWord(guess)){
-
-                            wordListView.add(guess);
-                            listViewInputs.setAdapter(adapterList);
-                            textGuess.setText("");
-
-                            Toast.makeText(MainActivity.this,
-                                    "RIGHT " + "Last Char:" + findLastChar(wordListView),
-                                     Toast.LENGTH_LONG).show();
-
-                            guess = "";
-
-
-
-                        }else{
-                            Toast.makeText(MainActivity.this,
-                                    "WRONG " + "Last Char:" + findLastChar(wordListView),
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }else{
-                        Toast.makeText(MainActivity.this, "I can see no word", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-        */
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -358,11 +334,14 @@ public class MultiActivity extends Activity {
         if (musicFlag)
             music.start();
 
+        mGoogleApiClient.connect();
+
+
         newInputTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
-                showCustomToast("+25 Puan");
+                //showCustomToast("+25 Puan");
                 //send word to wordsLayout.
                 /*
                 if(!newInputTextView.getText().toString().isEmpty()) {
@@ -380,10 +359,16 @@ public class MultiActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("User Action", "Delete the last char");
-                if (newInputTextView.getText().toString().length() != 0)
+                if (newInputTextView.getText().toString().length() != 0) {
                     newInputTextView.setText(backSpace(newInputTextView.getText().toString()));
-                else
+                }
+                else{
                     showCustomToast("Silinecek harf kalmadı");
+                    if(mGoogleApiClient.isConnected())
+                        showCustomToast("Baglı");
+                    onQuickMatchClicked();
+                }
+
             }
         });
 
@@ -438,6 +423,12 @@ public class MultiActivity extends Activity {
             musicFlag = false;
         else
             musicFlag = true;
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -498,4 +489,291 @@ public class MultiActivity extends Activity {
         });
 
     }
+
+    // Handle notification events.
+    @Override
+    public void onInvitationReceived(Invitation invitation) {
+        Toast.makeText(
+                this,
+                "An invitation has arrived from "
+                        + invitation.getInviter().getDisplayName(), Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void onInvitationRemoved(String invitationId) {
+        Toast.makeText(this, "An invitation was removed.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTurnBasedMatchReceived(TurnBasedMatch match) {
+        Toast.makeText(this, "A match was updated.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTurnBasedMatchRemoved(String matchId) {
+        Toast.makeText(this, "A match was removed.", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void showErrorMessage(TurnBasedMatch match, int statusCode, int stringId) {
+
+        showWarning("Warning", getResources().getString(stringId));
+    }
+
+    public void showWarning(String title, String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title
+        alertDialogBuilder.setTitle(title).setMessage(message);
+
+        // set dialog message
+        alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+                    }
+                });
+
+        // create alert dialog
+        mAlertDialog = alertDialogBuilder.create();
+
+        // show it
+        mAlertDialog.show();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        Log.d("INfo", "onConnected(): Connection successful");
+
+        // Retrieve the TurnBasedMatch from the connectionHint
+        if (connectionHint != null) {
+            mTurnBasedMatch = connectionHint.getParcelable(Multiplayer.EXTRA_TURN_BASED_MATCH);
+
+            if (mTurnBasedMatch != null) {
+                if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+                    Log.e("INfo", "Warning: accessing TurnBasedMatch when not connected");
+                }else{
+                    onQuickMatchClicked();
+                }
+
+                updateMatch(mTurnBasedMatch);
+                return;
+            }
+        }
+
+        //setViewVisibility();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d("MultiActivity:", "onConnectionSuspended():  Trying to reconnect.");
+        mGoogleApiClient.connect();
+        //setViewVisibility();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d("MultiActivity:", "onConnectionSuspended():  Trying to reconnect.");
+    }
+
+    public void onQuickMatchClicked() {
+
+        Bundle autoMatchCriteria = RoomConfig.createAutoMatchCriteria(
+                1, 1, 0);
+
+        TurnBasedMatchConfig tbmc = TurnBasedMatchConfig.builder()
+                .setAutoMatchCriteria(autoMatchCriteria).build();
+
+        //showSpinner();
+
+        // Start the match
+        ResultCallback<TurnBasedMultiplayer.InitiateMatchResult> cb = new ResultCallback<TurnBasedMultiplayer.InitiateMatchResult>() {
+            @Override
+            public void onResult(TurnBasedMultiplayer.InitiateMatchResult result) {
+                processResult(result);
+            }
+        };
+        Games.TurnBasedMultiplayer.createMatch(mGoogleApiClient, tbmc).setResultCallback(cb);
+    }
+
+    public void processResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+        TurnBasedMatch match = result.getMatch();
+        //dismissSpinner();
+        if (!checkStatusCode(match, result.getStatus().getStatusCode())) {
+            return;
+        }
+        if (match.canRematch()) {
+            //askForRematch();
+        }
+
+        isDoingTurn = (match.getTurnStatus() == TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN);
+
+        if (isDoingTurn) {
+            updateMatch(match);
+            return;
+        }
+
+        //setViewVisibility();
+    }
+
+    private void processResult(TurnBasedMultiplayer.LeaveMatchResult result) {
+        TurnBasedMatch match = result.getMatch();
+        //dismissSpinner();
+        if (!checkStatusCode(match, result.getStatus().getStatusCode())) {
+            return;
+        }
+        isDoingTurn = (match.getTurnStatus() == TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN);
+        showWarning("Left", "You've left this match.");
+    }
+
+    private void processResult(TurnBasedMultiplayer.InitiateMatchResult result) {
+        TurnBasedMatch match = result.getMatch();
+        //dismissSpinner();
+
+        if (!checkStatusCode(match, result.getStatus().getStatusCode())) {
+            return;
+        }
+
+        if (match.getData() != null) {
+            // This is a game that has already started, so I'll just start
+            updateMatch(match);
+            return;
+        }
+
+        startMatch(match);
+    }
+
+    private void processResult(TurnBasedMultiplayer.CancelMatchResult result) {
+        //dismissSpinner();
+
+        if (!checkStatusCode(null, result.getStatus().getStatusCode())) {
+            return;
+        }
+
+        isDoingTurn = false;
+
+        showWarning("Match",
+                "This match is canceled.  All other players will have their game ended.");
+    }
+
+    private boolean checkStatusCode(TurnBasedMatch match, int statusCode) {
+        switch (statusCode) {
+            case GamesStatusCodes.STATUS_OK:
+                return true;
+            case GamesStatusCodes.STATUS_NETWORK_ERROR_OPERATION_DEFERRED:
+                // This is OK; the action is stored by Google Play Services and will
+                // be dealt with later.
+                Toast.makeText(
+                        this,
+                        "Stored action for later.  (Please remove this toast before release.)",
+                        Toast.LENGTH_SHORT).show();
+                // NOTE: This toast is for informative reasons only; please remove
+                // it from your final application.
+                return true;
+            case GamesStatusCodes.STATUS_MULTIPLAYER_ERROR_NOT_TRUSTED_TESTER:
+                showErrorMessage(match, statusCode, 1);
+                break;
+            case GamesStatusCodes.STATUS_MATCH_ERROR_ALREADY_REMATCHED:
+                showErrorMessage(match, statusCode,2);
+                break;
+            case GamesStatusCodes.STATUS_NETWORK_ERROR_OPERATION_FAILED:
+                showErrorMessage(match, statusCode,3);
+                break;
+            case GamesStatusCodes.STATUS_CLIENT_RECONNECT_REQUIRED:
+                showErrorMessage(match, statusCode,4);
+                break;
+            case GamesStatusCodes.STATUS_INTERNAL_ERROR:
+                showErrorMessage(match, statusCode,5);
+                break;
+            case GamesStatusCodes.STATUS_MATCH_ERROR_INACTIVE_MATCH:
+                showErrorMessage(match, statusCode,6);
+                break;
+            case GamesStatusCodes.STATUS_MATCH_ERROR_LOCALLY_MODIFIED:
+                showErrorMessage(match, statusCode,7);
+                break;
+            default:
+                showErrorMessage(match, statusCode, 8);
+                Log.d("Error", "Did not have warning or string to deal with: "
+                        + statusCode);
+        }
+
+        return false;
+    }
+
+    public void updateMatch(TurnBasedMatch match) {
+        mMatch = match;
+
+        int status = match.getStatus();
+        int turnStatus = match.getTurnStatus();
+
+        switch (status) {
+            case TurnBasedMatch.MATCH_STATUS_CANCELED:
+                showWarning("Canceled!", "This game was canceled!");
+                return;
+            case TurnBasedMatch.MATCH_STATUS_EXPIRED:
+                showWarning("Expired!", "This game is expired.  So sad!");
+                return;
+            case TurnBasedMatch.MATCH_STATUS_AUTO_MATCHING:
+                showWarning("Waiting for auto-match...",
+                        "We're still waiting for an automatch partner.");
+                return;
+            case TurnBasedMatch.MATCH_STATUS_COMPLETE:
+                if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
+                    showWarning(
+                            "Complete!",
+                            "This game is over; someone finished it, and so did you!  There is nothing to be done.");
+                    break;
+                }
+
+                // Note that in this state, you must still call "Finish" yourself,
+                // so we allow this to continue.
+                showWarning("Complete!",
+                        "This game is over; someone finished it!  You can only finish it now.");
+        }
+
+        // OK, it's active. Check on turn status.
+        switch (turnStatus) {
+            case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
+                //mTurnData = SkeletonTurn.unpersist(mMatch.getData());
+                //setGameplayUI();
+                return;
+            case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
+                // Should return results.
+                showWarning("Alas...", "It's not your turn.");
+                break;
+            case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
+                showWarning("Good inititative!",
+                        "Still waiting for invitations.\n\nBe patient!");
+        }
+
+        //mTurnData = null;
+
+        //setViewVisibility();
+    }
+
+    public void startMatch(TurnBasedMatch match) {
+        //mTurnData = new SkeletonTurn();
+        // Some basic turn data
+        //mTurnData.data = "First turn";
+
+        mMatch = match;
+
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String myParticipantId = mMatch.getParticipantId(playerId);
+
+        //showSpinner();
+
+        Games.TurnBasedMultiplayer.takeTurn(mGoogleApiClient, match.getMatchId(),
+                null, myParticipantId).setResultCallback(
+                new ResultCallback<TurnBasedMultiplayer.UpdateMatchResult>() {
+                    @Override
+                    public void onResult(TurnBasedMultiplayer.UpdateMatchResult result) {
+                        processResult(result);
+                    }
+                });
+    }
+
 }
