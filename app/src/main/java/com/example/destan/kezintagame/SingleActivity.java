@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -333,10 +334,18 @@ public class SingleActivity extends Activity {
                             else
                                 showCustomToast("Kelime tekrarı!");
 
-                        words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
-                        wordAdapter.notifyDataSetChanged();
-                        turnCounter++;
-                        scrollMyListViewToBottom();
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Do something after 5s = 5000ms
+                                words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
+                                wordAdapter.notifyDataSetChanged();
+                                turnCounter++;
+                                scrollMyListViewToBottom();
+                            }
+                        }, 500);
+
                     }
                     else
                         showCustomToast("Geçersiz kelime.");
