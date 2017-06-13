@@ -77,7 +77,7 @@ public class WordStore {
 
     private static int getRandomInteger(int max){
         Random random = new Random();
-        return random.nextInt(max + 1);
+        return random.nextInt(max);
     }
 
     private static ArrayList<String> getCustomLengthWords(int digit,char firstChar){

@@ -1,5 +1,7 @@
 package com.example.destan.kezintagame;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 /**
@@ -47,9 +49,11 @@ public class LetterScoreTable {
     }
 
     public static int getValue(Character character){
-        return scores.get(character);
+        try {
+            return scores.get(character);
+        }catch (Exception e){
+            Log.e("LetterScoreTable:",e.getMessage());
+            return 0;
+        }
     }
-
-
-
 }

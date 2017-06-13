@@ -305,36 +305,42 @@ public class SingleActivity extends Activity {
                 if(turnCounter == 0) {
 
                     if(!newInputTextView.getText().toString().isEmpty() && WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase())){
-                        words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
-                        wordAdapter.notifyDataSetChanged();
-                        newInputTextView.setText("");
-                        showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
-                        words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
-                        wordAdapter.notifyDataSetChanged();
-                        turnCounter++;
+                            words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
+                            wordAdapter.notifyDataSetChanged();
+                            newInputTextView.setText("");
+                            showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
+                            words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
+                            wordAdapter.notifyDataSetChanged();
+                            turnCounter++;
                     }else{
                         showCustomToast("Boş veya geçersiz kelime.");
                     }
                 }
 
                 else{
-                    if(!newInputTextView.getText().toString().isEmpty() &&
-                       WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase()) &&
-                       newInputTextView.getText().toString().toLowerCase().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))){
+                    if(!newInputTextView.getText().toString().isEmpty() && WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase()) &&
+                            newInputTextView.getText().toString().toLowerCase().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))){
 
-                        words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
-                        wordAdapter.notifyDataSetChanged();
-                        newInputTextView.setText("");
-                        scrollMyListViewToBottom();
-                        showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
+                            if(!GameLogic.isOverlap(new GameLogic(newInputTextView.getText().toString().toLowerCase()),words))
+                            {
+                            words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
+                            wordAdapter.notifyDataSetChanged();
+                            newInputTextView.setText("");
+                            scrollMyListViewToBottom();
+                            turnCounter++;
+                            showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
+                            }
+                            else
+                                showCustomToast("Kelime tekrarı!");
+
                         words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
                         wordAdapter.notifyDataSetChanged();
+                        turnCounter++;
                         scrollMyListViewToBottom();
                     }
                     else
                         showCustomToast("Geçersiz kelime.");
                 }
-
                 return true;
             }
         });

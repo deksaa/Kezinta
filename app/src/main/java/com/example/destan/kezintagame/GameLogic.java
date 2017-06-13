@@ -1,6 +1,9 @@
 package com.example.destan.kezintagame;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by destan on 08.06.2017.
@@ -57,4 +60,18 @@ public class GameLogic {
         int size = chars.length;
         setLastChar(chars[size - 1]);
     }
+
+    public static boolean isOverlap(GameLogic gameLogic,List<GameLogic> list){
+        String s = gameLogic.getWord();
+        boolean flag = false;
+        Log.e("String s:",s.toString());
+        for (GameLogic object:list) {
+            Log.e("Object:",object.getWord());
+            if(object.getWord().equalsIgnoreCase(s)) {
+                flag = !flag;
+            }
+        }
+        return flag;
+    }
+
 }
