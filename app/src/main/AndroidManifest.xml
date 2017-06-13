@@ -38,7 +38,9 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".SingleActivity" />
+        <activity android:name=".SingleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".MultiActivity"></activity>
     </application>
 
