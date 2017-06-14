@@ -31,7 +31,7 @@
             android:id="@+id/switchIconView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:si_animation_duration="300"
+            app:si_animation_duration="600"
             app:si_tint_color="@color/inputWordColor"
             app:srcCompat="@drawable/ic_sun2"/>
 
@@ -40,24 +40,48 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8">
+            android:layout_weight="8"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/userScoreTextview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/inputWordColor"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+                android:paddingRight="10dp"
+                android:text="121212"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:id="@+id/turnCounterTextview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/inputWordColor"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="121212"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:id="@+id/machineScoreTextview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/inputWordColor"
+                android:textSize="16sp"
+                android:text="121212"
+                android:paddingLeft="4dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"/>
+
         </LinearLayout>
 
-        <!--Fading text shower to inform user-->
-        <!--
-        <com.tomer.fadingtextview.FadingTextView
-            android:id="@+id/fadingTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:layout_weight="8"
-            android:textSize="20sp"
-            android:textColor="@color/inputWordColor"
-            app:timeout="1000"
-            app:texts="@array/txtStrings" />
-        -->
-        <!--It contain sound on/off icon-->
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -68,7 +92,7 @@
                 android:id="@+id/switchIconView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:si_animation_duration="300"
+                app:si_animation_duration="600"
                 app:si_tint_color="@color/inputWordColor"
                 app:srcCompat="@drawable/ic_sound"
                 />

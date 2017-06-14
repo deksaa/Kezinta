@@ -43,6 +43,8 @@ public class SingleActivity extends Activity {
 
     int duration;
     int turnCounter;
+    int userScore;
+    int machineScore;
     boolean musicFlag;
 
     ArrayList wordCollection;//It stores the all of words
@@ -62,6 +64,10 @@ public class SingleActivity extends Activity {
 
     AutofitTextView newInputTextView;
 
+    TextView turnCounterText;
+    TextView machineScoreText;
+    TextView userScoreText;
+
     private SwitchIconView switchIcon1;
     private SwitchIconView switchIcon2;
 
@@ -69,8 +75,6 @@ public class SingleActivity extends Activity {
 
     WordAdapter wordAdapter;
 
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
 
     //Initializing view components,ArrayLists and some methods(read from raw,generate random word for start,find last char of first word)
     public void init() {
@@ -90,6 +94,9 @@ public class SingleActivity extends Activity {
         keyboardImageViews = new ArrayList<>();
 
         newInputTextView = (AutofitTextView) findViewById(R.id.inputText);
+        userScoreText = (TextView)findViewById(R.id.userScoreTextview);
+        machineScoreText = (TextView)findViewById(R.id.machineScoreTextview);
+        turnCounterText = (TextView)findViewById(R.id.turnCounterTextview);
 
         keyboardImageViews.add((ImageView) findViewById(R.id.q));
         keyboardImageViews.add((ImageView) findViewById(R.id.w));
@@ -229,6 +236,27 @@ public class SingleActivity extends Activity {
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, setVolume, 0);
     }
 
+    public void initialScoreTable(boolean isTurkish){
+        if(isTurkish){
+            userScoreText.setText("Sen:0");
+            turnCounterText.setText("Sıra:0");
+            machineScoreText.setText("Kezinta:0");
+        }else{
+            userScoreText.setText("You:0");
+            turnCounterText.setText("Turn:0");
+            machineScoreText.setText("Kezinta:0");
+        }
+    }
+
+    public void setScoreTable(int score,int turn,boolean isUser){
+        if(isUser)
+           userScoreText.setText(String.format("Sen:%d",score));
+        else
+            machineScoreText.setText(String.format("Kezinta:%d",score));
+
+        turnCounterText.setText(String.format("Sıra:%d",turn));
+    }
+
     private void scrollMyListViewToBottom() {
         wordList.post(new Runnable() {
             @Override
@@ -248,6 +276,8 @@ public class SingleActivity extends Activity {
 
         this.init();
 
+        initialScoreTable(true);
+
         wordAdapter = new WordAdapter(SingleActivity.this,words);
         wordList.setAdapter(wordAdapter);
 
@@ -263,13 +293,19 @@ public class SingleActivity extends Activity {
                     @Override
                     public void run() {
                         if (switchIcon1.isIconEnabled()) {
-                            backGround.setBackgroundResource(R.color.MainBackground);
+                            backGround.setBackgroundResource(R.drawable.background_day);
                             wordList.setBackgroundResource(R.drawable.background_day);
                             inputWordLayout.setBackgroundResource(R.drawable.background_day);
+                            userScoreText.setTextColor(Color.parseColor("#01332E"));
+                            turnCounterText.setTextColor(Color.parseColor("#01332E"));
+                            machineScoreText.setTextColor(Color.parseColor("#01332E"));
                         } else {
-                            backGround.setBackgroundResource(R.color.black);
+                            backGround.setBackgroundResource(R.drawable.background_night);
                             wordList.setBackgroundResource(R.drawable.background_night);
                             inputWordLayout.setBackgroundResource(R.drawable.background_night);
+                            userScoreText.setTextColor(Color.parseColor("#ffc400"));
+                            turnCounterText.setTextColor(Color.parseColor("#ffc400"));
+                            machineScoreText.setTextColor(Color.parseColor("#ffc400"));
                         }
                     }
                 });
@@ -295,24 +331,26 @@ public class SingleActivity extends Activity {
         newInputTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //Toast.makeText(MainActivity.this,"Long Click",Toast.LENGTH_SHORT).show();
-                //showCustomToast("+25 Puan");
-                //send word to wordsLayout.
-                //if(!newInputTextView.getText().toString().isEmpty()) {
-                //    words.add(new Word(newInputTextView.getText().toString()));
-                //    wordAdapter.notifyDataSetChanged();
-                //    scrollMyListViewToBottom();
-                //}
+
                 if(turnCounter == 0) {
 
                     if(!newInputTextView.getText().toString().isEmpty() && WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase())){
+                            //User turn
+                            turnCounter++;
                             words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
                             wordAdapter.notifyDataSetChanged();
                             newInputTextView.setText("");
-                            showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
+                            userScore += words.get(words.size() - 1).getScore();
+                            setScoreTable(userScore,turnCounter,true);
+                            //End User turn.
+
+                            //Kezinta turn.
+                            ++turnCounter;
                             words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
+                            machineScore += words.get(words.size() - 1).getScore();
+                            setScoreTable(machineScore,turnCounter,false);
                             wordAdapter.notifyDataSetChanged();
-                            turnCounter++;
+                            //End Kezinta turn.
                     }else{
                         showCustomToast("Boş veya geçersiz kelime.");
                     }
@@ -324,12 +362,13 @@ public class SingleActivity extends Activity {
 
                             if(!GameLogic.isOverlap(new GameLogic(newInputTextView.getText().toString().toLowerCase()),words))
                             {
+                            turnCounter++;
                             words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
                             wordAdapter.notifyDataSetChanged();
                             newInputTextView.setText("");
+                            userScore += words.get(words.size() - 1).getScore();
+                            setScoreTable(userScore,turnCounter,true);
                             scrollMyListViewToBottom();
-                            turnCounter++;
-                            showCustomToast(words.get(words.size() - 1).getScore() + " Puan");
                             }
                             else
                                 showCustomToast("Kelime tekrarı!");
@@ -339,9 +378,11 @@ public class SingleActivity extends Activity {
                             @Override
                             public void run() {
                                 // Do something after 5s = 5000ms
+                                turnCounter++;
                                 words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
                                 wordAdapter.notifyDataSetChanged();
-                                turnCounter++;
+                                machineScore += words.get(words.size() - 1).getScore();
+                                setScoreTable(machineScore,turnCounter,false);
                                 scrollMyListViewToBottom();
                             }
                         }, 500);

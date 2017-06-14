@@ -3,7 +3,6 @@
     <color name="MainBackground">#ffc400</color>
     <color name="TaskBarColor">#a8000000</color>
     <color name="inputWordColor">#01332E</color>
-
     <color name="black_overlay">#66000000</color>
     <color name="gray_overlay">#FF505050</color>
     <color name="black">#000000</color>
