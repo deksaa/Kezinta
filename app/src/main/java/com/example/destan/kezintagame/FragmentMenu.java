@@ -1,12 +1,14 @@
 package com.example.destan.kezintagame;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -73,6 +75,16 @@ public class FragmentMenu extends Fragment {
         }
     }
 
+    private void showLanguageOptions(){
+        final Dialog dialogue = new Dialog(getActivity(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100, 0, 0, 0)));
+        dialogue.setContentView(R.layout.dialogue_options);
+        final ImageView langTr = (ImageView) dialogue.findViewById(R.id.turkishOption);
+        final ImageView langEn = (ImageView) dialogue.findViewById(R.id.englishOption);
+        dialogue.setCancelable(true);
+        dialogue.show();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -120,7 +132,8 @@ public class FragmentMenu extends Fragment {
                         //menuActivity.applyColorFilter(singleImage, false);
                         applyColorFilter(singleImage,singleOption,false);
                         //Here for new activity
-                        goToGamePlay(0);
+                        //goToGamePlay(0);
+                        showLanguageOptions();
                         break;
                     }
                 }

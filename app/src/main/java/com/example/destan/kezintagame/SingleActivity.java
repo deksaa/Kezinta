@@ -360,25 +360,26 @@ public class SingleActivity extends Activity {
                     }
                 }
 
-                else{
-                    if(!getInput().isEmpty() && WordStore.isWordExist(getInput()) &&
-                            getInput().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))){
+                else {
+                    if (!getInput().isEmpty() && WordStore.isWordExist(getInput()) &&
+                            getInput().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))) {
 
-                            //Checking overlapping.
-                            if(!GameLogic.isOverlap(new GameLogic(getInput().toLowerCase()),words))
-                            {
-                                //User turn.
+                        //Checking overlapping.
+                        if (!GameLogic.isOverlap(new GameLogic(getInput().toLowerCase()), words)) {
+                            //User turn.
                             turnCounter++;
                             words.add(new GameLogic(getInput()));
                             wordAdapter.notifyDataSetChanged();
                             newInputTextView.setText("");
                             userScore += words.get(words.size() - 1).getScore();
-                            setScoreTable(userScore,turnCounter,true);
+                            setScoreTable(userScore, turnCounter, true);
                             scrollMyListViewToBottom();
-                                //User turn end.
-                            }
-                            else
-                                showCustomToast("Kelime tekrarı!");
+                            //User turn end.
+                        }
+                        else
+                        {
+                            showCustomToast("Kelime tekrarı!");
+                        }
 
                         final Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -398,7 +399,9 @@ public class SingleActivity extends Activity {
 
                     }
                     else
+                    {
                         showCustomToast("Geçersiz kelime.");
+                    }
                 }
                 return true;
             }
