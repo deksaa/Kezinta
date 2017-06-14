@@ -267,6 +267,10 @@ public class SingleActivity extends Activity {
         });
     }
 
+    private String getInput(){
+        return newInputTextView.getText().toString().toLowerCase();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -334,10 +338,10 @@ public class SingleActivity extends Activity {
 
                 if(turnCounter == 0) {
 
-                    if(!newInputTextView.getText().toString().isEmpty() && WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase())){
+                    if(!getInput().isEmpty() && WordStore.isWordExist(getInput())){
                             //User turn
                             turnCounter++;
-                            words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
+                            words.add(new GameLogic(getInput()));
                             wordAdapter.notifyDataSetChanged();
                             newInputTextView.setText("");
                             userScore += words.get(words.size() - 1).getScore();
@@ -357,18 +361,21 @@ public class SingleActivity extends Activity {
                 }
 
                 else{
-                    if(!newInputTextView.getText().toString().isEmpty() && WordStore.isWordExist(newInputTextView.getText().toString().toLowerCase()) &&
-                            newInputTextView.getText().toString().toLowerCase().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))){
+                    if(!getInput().isEmpty() && WordStore.isWordExist(getInput()) &&
+                            getInput().startsWith(String.valueOf(words.get(words.size() - 1).getLastChar()))){
 
-                            if(!GameLogic.isOverlap(new GameLogic(newInputTextView.getText().toString().toLowerCase()),words))
+                            //Checking overlapping.
+                            if(!GameLogic.isOverlap(new GameLogic(getInput().toLowerCase()),words))
                             {
+                                //User turn.
                             turnCounter++;
-                            words.add(new GameLogic(newInputTextView.getText().toString().toLowerCase()));
+                            words.add(new GameLogic(getInput()));
                             wordAdapter.notifyDataSetChanged();
                             newInputTextView.setText("");
                             userScore += words.get(words.size() - 1).getScore();
                             setScoreTable(userScore,turnCounter,true);
                             scrollMyListViewToBottom();
+                                //User turn end.
                             }
                             else
                                 showCustomToast("Kelime tekrarı!");
@@ -377,13 +384,15 @@ public class SingleActivity extends Activity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                // Do something after 5s = 5000ms
+                                // Do something after 500ms
+                                //Kezinta turn.
                                 turnCounter++;
                                 words.add(new GameLogic(WordStore.getRandomWord(words.get(words.size() - 1).getLastChar())));
                                 wordAdapter.notifyDataSetChanged();
                                 machineScore += words.get(words.size() - 1).getScore();
                                 setScoreTable(machineScore,turnCounter,false);
                                 scrollMyListViewToBottom();
+                                //Kezinta turn end.
                             }
                         }, 500);
 
@@ -436,71 +445,6 @@ public class SingleActivity extends Activity {
         }
 
     }
-
-
-/*
-
-        ArrayAdapter<String> adapterGrid = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, letters);
-        final ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this,R.layout.my_text,R.id.textItem,wordListView);
-
-        gridKeyboard.setAdapter(adapterGrid);
-        listViewInputs.setAdapter(adapterList);
-
-        textGuess.setText("");
-
-        gridKeyboard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (!letters[position].equals("←") && !letters[position].equals("↪")) {
-
-                    guess += letters[position];
-                    guess = guess.toLowerCase();
-                    textGuess.setText(guess);
-
-
-                } else if (letters[position].equals("←")) {
-
-                    if (!guess.equals("")) {
-
-                        guess = guess.replaceFirst(String.valueOf(guess.charAt(guess.length() - 1)), "");
-                        textGuess.setText(guess);
-
-                    } else {
-
-                        Toast.makeText(MainActivity.this, "No letter to delete", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    if(!guess.equals("")){
-                        if(guess.startsWith(findLastChar(wordListView)) && checkWord(guess)){
-
-                            wordListView.add(guess);
-                            listViewInputs.setAdapter(adapterList);
-                            textGuess.setText("");
-
-                            Toast.makeText(MainActivity.this,
-                                    "RIGHT " + "Last Char:" + findLastChar(wordListView),
-                                     Toast.LENGTH_LONG).show();
-
-                            guess = "";
-
-
-
-                        }else{
-                            Toast.makeText(MainActivity.this,
-                                    "WRONG " + "Last Char:" + findLastChar(wordListView),
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }else{
-                        Toast.makeText(MainActivity.this, "I can see no word", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-        */
-
 
     @Override
     protected void onStart() {

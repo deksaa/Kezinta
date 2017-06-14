@@ -330,7 +330,7 @@ public class MenuActivity extends FragmentActivity implements
                         }
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL: {
-                            //applyColorFilter(exitImage,false);
+                            applyColorFilter(exitImage,false);
                             dialogue.dismiss();
                             MenuActivity.this.finish();
                             break;
