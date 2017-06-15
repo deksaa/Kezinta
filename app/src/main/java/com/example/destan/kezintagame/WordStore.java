@@ -35,6 +35,10 @@ public class WordStore {
             }
         }
 
+    public static void clearStore(){
+        words.clear();
+    }
+
     public static boolean isWordExist(String word){
         if(words.contains(word))
             return true;

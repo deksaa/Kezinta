@@ -2,8 +2,6 @@ package com.example.destan.kezintagame;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,9 +27,6 @@ import android.widget.Toast;
 
 import com.github.zagum.switchicon.SwitchIconView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +39,8 @@ public class SingleActivity extends Activity {
     int turnCounter;
     int userScore;
     int machineScore;
+
+    boolean languageFlag;
     boolean musicFlag;
 
     ArrayList wordCollection;//It stores the all of words
@@ -80,8 +76,6 @@ public class SingleActivity extends Activity {
     public void init() {
 
         words = new ArrayList<>();
-
-        WordStore.setStore(getApplicationContext(),R.raw.turkish_words);
 
         switchIcon1 = (SwitchIconView) findViewById(R.id.switchIconView1);
         switchIcon2 = (SwitchIconView) findViewById(R.id.switchIconView2);
@@ -142,37 +136,6 @@ public class SingleActivity extends Activity {
         musicFlag = true;
 
         menuActivity = new MenuActivity();
-
-        readFromRaw();
-    }
-
-    //Check the word if it exist and it's not repeated
-    public boolean checkWord(String word) {
-
-        if (wordCollection.contains(word) && !wordListView.contains(word))
-            return true;
-        else
-            return false;
-
-    }
-
-    //Read the .txt file line by line and store in wordCollection which type is ArrayList
-    public void readFromRaw() {
-
-        try {
-            InputStream fis = this.getResources().openRawResource(R.raw.turkish_words);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-
-            String line;
-
-            while ((line = br.readLine()) != null)
-                wordCollection.add(line);
-
-            //listWords.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, wordCollection));
-        } catch (Exception ex) {
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     private String backSpace(String str) {
@@ -181,7 +144,7 @@ public class SingleActivity extends Activity {
         for (int i = 0; i < ch.length - 1; i++)
             str += ch[i];
 
-        return str;
+        return str.toUpperCase();
     }
 
     private String filterForChars(String s) {
@@ -207,7 +170,6 @@ public class SingleActivity extends Activity {
     private void refreshInputText(String s) {
         if (newInputTextView.getText().toString().length() < 15) {
             newInputTextView.setText(newInputTextView.getText().toString() + s);
-            //decreaseTextSize(inputText);
         }
 
     }
@@ -237,7 +199,7 @@ public class SingleActivity extends Activity {
     }
 
     public void initialScoreTable(boolean isTurkish){
-        if(isTurkish){
+        if(languageFlag){
             userScoreText.setText("Sen:0");
             turnCounterText.setText("Sıra:0");
             machineScoreText.setText("Kezinta:0");
@@ -249,12 +211,24 @@ public class SingleActivity extends Activity {
     }
 
     public void setScoreTable(int score,int turn,boolean isUser){
-        if(isUser)
-           userScoreText.setText(String.format("Sen:%d",score));
-        else
-            machineScoreText.setText(String.format("Kezinta:%d",score));
+        if(languageFlag) {
+            if (isUser)
+                userScoreText.setText(String.format("Sen:%d", score));
+            else
+                machineScoreText.setText(String.format("Kezinta:%d", score));
 
-        turnCounterText.setText(String.format("Sıra:%d",turn));
+            turnCounterText.setText(String.format("Sıra:%d", turn));
+        }
+        else
+        {
+            if (isUser)
+                userScoreText.setText(String.format("You:%d", score));
+            else
+                machineScoreText.setText(String.format("Kezinta:%d", score));
+
+            turnCounterText.setText(String.format("Turn:%d", turn));
+        }
+        //else print English
     }
 
     private void scrollMyListViewToBottom() {
@@ -274,20 +248,32 @@ public class SingleActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        languageFlag = intent.getExtras().getBoolean("Language");
+
+        if(languageFlag)
+            WordStore.setStore(getApplicationContext(),R.raw.turkish_words);
+        else
+            WordStore.setStore(getApplicationContext(),R.raw.english_words);
+
         this.init();
 
-        initialScoreTable(true);
+        initialScoreTable(languageFlag);
 
         wordAdapter = new WordAdapter(SingleActivity.this,words);
         wordList.setAdapter(wordAdapter);
 
         setMusicLevel(0.3f);
 
-        showCustomToast("Bir kelime girin.");
+        if(languageFlag)
+            showCustomToast("Bir kelime girin.");
+        else
+            showCustomToast("Enter a word.");
 
         switchIcon1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,7 +342,10 @@ public class SingleActivity extends Activity {
                             wordAdapter.notifyDataSetChanged();
                             //End Kezinta turn.
                     }else{
-                        showCustomToast("Boş veya geçersiz kelime.");
+                        if(languageFlag)
+                            showCustomToast("Boş veya geçersiz kelime.");
+                        else
+                            showCustomToast("Empty or invalid word.Try Again.");
                     }
                 }
 
@@ -378,7 +367,10 @@ public class SingleActivity extends Activity {
                         }
                         else
                         {
-                            showCustomToast("Kelime tekrarı!");
+                            if(languageFlag)
+                                showCustomToast("Kelime tekrarı!");
+                            else
+                                showCustomToast("Word Overlapping!");
                         }
 
                         final Handler handler = new Handler();
@@ -400,7 +392,10 @@ public class SingleActivity extends Activity {
                     }
                     else
                     {
-                        showCustomToast("Geçersiz kelime.");
+                        if(languageFlag)
+                            showCustomToast("Geçersiz kelime.");
+                        else
+                            showCustomToast("Invalid word.");
                     }
                 }
                 return true;
@@ -412,10 +407,16 @@ public class SingleActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("User Action", "Delete the last char");
-                if (newInputTextView.getText().toString().length() != 0)
-                    newInputTextView.setText(backSpace(newInputTextView.getText().toString()));
+                if (getInput().length() != 0)
+                    newInputTextView.setText(backSpace(getInput()));
                 else
-                    showCustomToast("Silinecek harf kalmadı");
+                {
+                    if(languageFlag)
+                        showCustomToast("Silinecek harf kalmadı.");
+                    else
+                        showCustomToast("There is no word to delete.");
+                }
+
             }
         });
 
@@ -484,6 +485,12 @@ public class SingleActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //WordStore.clearStore();
+    }
+
+    @Override
     public void onBackPressed() {
         Log.i("OnBackPressed worked.", "Now go to MainActivity.");
 
@@ -508,7 +515,7 @@ public class SingleActivity extends Activity {
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL: {
                         menuActivity.applyColorFilter(exitImage, false);
-                        dialogue.dismiss();
+                        dialogue.cancel();
                         Intent goToMenuActivity = new Intent(SingleActivity.this, MenuActivity.class);
                         SingleActivity.this.finish();
                         startActivity(goToMenuActivity);

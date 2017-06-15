@@ -83,6 +83,55 @@ public class FragmentMenu extends Fragment {
         final ImageView langEn = (ImageView) dialogue.findViewById(R.id.englishOption);
         dialogue.setCancelable(true);
         dialogue.show();
+
+        langTr.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i("exitImage:", "exitImage is touched.");
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        menuActivity.applyColorFilter(langTr, true);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL: {
+                        menuActivity.applyColorFilter(langTr, false);
+                        dialogue.dismiss();
+                        Intent goToSingleActivity = new Intent(getActivity(), SingleActivity.class);
+                        goToSingleActivity.putExtra("Language",true);
+                        getActivity().finish();
+                        startActivity(goToSingleActivity);
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+
+        langEn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i("stayImage:", "stayImage is touched.");
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        menuActivity.applyColorFilter(langEn, true);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL: {
+                        menuActivity.applyColorFilter(langEn, false);
+                        dialogue.dismiss();
+                        Intent goToSingleActivity = new Intent(getActivity(), SingleActivity.class);
+                        goToSingleActivity.putExtra("Language",false);
+                        getActivity().finish();
+                        startActivity(goToSingleActivity);
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+
     }
 
     @Nullable

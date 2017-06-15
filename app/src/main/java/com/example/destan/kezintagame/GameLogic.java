@@ -22,7 +22,6 @@ public class GameLogic {
         findLastChar();
     }
 
-
     public String getWord() {
         return word;
     }

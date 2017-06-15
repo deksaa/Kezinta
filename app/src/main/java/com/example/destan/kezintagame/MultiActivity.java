@@ -55,7 +55,10 @@ import java.util.List;
 
 import me.grantland.widget.AutofitTextView;
 
-public class MultiActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+public class MultiActivity extends FragmentActivity {
+
+        /*
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         OnInvitationReceivedListener, OnTurnBasedMatchUpdateReceivedListener{
 
 
@@ -271,8 +274,10 @@ public class MultiActivity extends FragmentActivity implements GoogleApiClient.C
         setContentView(R.layout.activity_main);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */,
-                        this /* OnConnectionFailedListener */)
+                .enableAutoManage(this /* FragmentActivity */
+        /*
+                        this  OnConnectionFailedListener )
+ /*
                 .addApi(Games.API)
                 .addScope(Games.SCOPE_GAMES)
                 .build();
@@ -324,7 +329,9 @@ public class MultiActivity extends FragmentActivity implements GoogleApiClient.C
         });
 
     }
+*/
 
+ /*
     @Override
     protected void onStart() {
         super.onStart();
@@ -349,12 +356,13 @@ public class MultiActivity extends FragmentActivity implements GoogleApiClient.C
                     wordAdapter.notifyDataSetChanged();
                     scrollMyListViewToBottom();
                 }
-                */
+                /*
                 return true;
             }
         });
-
+*/
         //This listener is used to delete last character.
+            /*
         newInputTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -775,5 +783,5 @@ public class MultiActivity extends FragmentActivity implements GoogleApiClient.C
                     }
                 });
     }
-
+*/
 }
