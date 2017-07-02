@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:background="@drawable/background_day"
     android:weightSum="15"
-    tools:context="com.example.destan.kezintagame.MainActivity">
+    tools:context="com.example.destan.kezintagame.SingleActivity">
 
     <!--It contains the task bar layout-->
     <LinearLayout
@@ -52,7 +52,7 @@
                 android:textSize="16sp"
                 android:gravity="center_vertical|end"
                 android:paddingRight="10dp"
-                android:text="121212"
+                android:text="You:0"
                 android:layout_weight="1"/>
 
 
@@ -64,7 +64,7 @@
                 android:textSize="18sp"
                 android:gravity="center"
                 android:padding="1dp"
-                android:text="121212"
+                android:text="Turn:0"
                 android:layout_weight="1"/>
 
 
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/inputWordColor"
                 android:textSize="16sp"
-                android:text="121212"
+                android:text="Kezinta:0"
                 android:paddingLeft="4dp"
                 android:gravity="center_vertical"
                 android:layout_weight="1"/>
@@ -141,6 +141,7 @@
                 android:textAlignment="center"
                 android:textIsSelectable="false"
                 android:maxLines="1"
+                android:text="WORD"
                 android:textSize="50sp"
                 autofit:minTextSize="16sp"
                 android:textColor="@color/inputWordColor"

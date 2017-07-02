@@ -486,6 +486,7 @@ public class SingleActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        Log.e("OnDestroy","is worked.");
         super.onDestroy();
         //WordStore.clearStore();
     }

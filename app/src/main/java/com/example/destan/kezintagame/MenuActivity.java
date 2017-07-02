@@ -98,8 +98,6 @@ public class MenuActivity extends FragmentActivity implements
         rotateRight.setRepeatCount(Animation.INFINITE);
 
         imageView.setAnimation(rotateRight);
-
-        imageView.setDrawingCacheEnabled(true);
     }
 
     private void startIntroAnimation(int duration) {
@@ -141,7 +139,7 @@ public class MenuActivity extends FragmentActivity implements
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT,"Kezinta - A new word game");
             String sAux = "\nKezinta on Google Play Store\n";
-            sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
+            sAux = sAux + "https://play.google.com/store/apps/details?id=Kezinta \n\n";
             shareIntent.putExtra(Intent.EXTRA_TEXT, sAux);
             startActivity(Intent.createChooser(shareIntent, "Choose one for 'Kezinta'"));
         }catch (Exception e){
